@@ -5,6 +5,17 @@ Description: >
   AutoGarage Backend - Serverless Application
 
 Resources:
+  # Definición del API Gateway
+  AutoGarageApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: AutoGarageApi
+      StageName: Dev
+      Cors:
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,Authorization'"
+        AllowOrigin: "'*'"
+
   # Lambda Function: Get Services
   GetServicesFunction:
     Type: AWS::Serverless::Function
@@ -21,6 +32,7 @@ Resources:
         GetApi:
           Type: Api
           Properties:
+            RestApiId: !Ref AutoGarageApi
             Path: /services
             Method: GET
 
@@ -40,6 +52,7 @@ Resources:
         PostApi:
           Type: Api
           Properties:
+            RestApiId: !Ref AutoGarageApi
             Path: /services
             Method: POST
 
