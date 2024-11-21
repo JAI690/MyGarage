@@ -1,13 +1,27 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
-Description: AutoGarage Backend - Serverless Application
+Description: Nested Stack for AutoGarage
 
 Resources:
-  # Incluir API Gateway
-  <<: *api
-  <<: *lambdas
-  <<: *dynamodb
+# Definición del API Gateway
+  AutoGarageApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: auto-garage-api
+      StageName: Dev
+      Cors:
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,Authorization'"
+        AllowOrigin: "'*'"
+  LambdasStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: infraestructura/lambdas.yaml
+  DynamoDBStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: infraestructura/dynamodb.yaml
 
 
 Parameters:
