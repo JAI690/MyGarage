@@ -1,8 +1,11 @@
-import { APIGatewayProxyHandler } from 'aws-lambda';
-import { getServices } from './services/get';
-import { createService } from './services/create';
+import { APIGatewayProxyEvent, Context, APIGatewayProxyResult } from 'aws-lambda';
+import { handler as getServices } from './services/get';
+import { handler as createService } from './services/create';
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
+export const handler = async (
+    event: APIGatewayProxyEvent,
+    context: Context
+  ): Promise<APIGatewayProxyResult> => {
   try {
     // Parse the HTTP method and path from the event
     const { httpMethod, path } = event;
