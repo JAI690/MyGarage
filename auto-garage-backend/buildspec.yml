@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16 # Usa la versión que prefieras de Node.js
+    commands:
+      - echo Installing dependencies...
+      - npm install
+      - npm install -g typescript
+  build:
+    commands:
+      - echo Compiling TypeScript to JavaScript...
+      - tsc # Compila los archivos de TypeScript
+      - echo Packaging the SAM application...
+      - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml
+artifacts:
+  files:
+    - packaged.yaml # Archivo generado por SAM
+    - dist/**/* # Archivos compilados de TypeScript
