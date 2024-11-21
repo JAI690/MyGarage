@@ -1,12 +1,13 @@
 import { APIGatewayProxyEvent, Context, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import { authorize } from '../utils/authorize';
+import type { CustomContext } from '../types/CustomContext';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
 export const handler =  authorize(['Admin'])(async (
     event: APIGatewayProxyEvent,
-    context: Context
+    context: CustomContext
   ): Promise<APIGatewayProxyResult> => {
   try {
     const body = JSON.parse(event.body || '{}');

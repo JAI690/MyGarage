@@ -1,13 +1,14 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from 'aws-lambda';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import type { CustomContext } from '../types/CustomContext';
 
 const SECRET_KEY = process.env.JWT_SECRET || 'your-secret-key';
 
 export const authorize = (allowedRoles: string[]) => {
   return (
-    handler: (event: APIGatewayProxyEvent, context: Context) => Promise<APIGatewayProxyResult>
+    handler: (event: APIGatewayProxyEvent, context: CustomContext) => Promise<APIGatewayProxyResult>
   ) => {
-    return async (event: APIGatewayProxyEvent, context: Context): Promise<APIGatewayProxyResult> => {
+    return async (event: APIGatewayProxyEvent, context: CustomContext): Promise<APIGatewayProxyResult> => {
       try {
         const authHeader = event.headers.Authorization || event.headers.authorization;
         if (!authHeader) {
