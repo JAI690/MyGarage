@@ -1,0 +1,14 @@
+{
+    "name": "auto-garage",
+    "version": "1.0.0",
+    "main": "index.js",
+    "dependencies": {
+      "typescript": "^4.0.0",
+      "aws-sdk": "^2.1000.0"
+    },
+    "scripts": {
+      "build": "tsc",
+      "start": "node dist/index.js"
+    }
+  }
+  
