@@ -14,6 +14,8 @@
         "@types/aws-lambda": "^8.10.145",
         "@types/bcryptjs": "^2.4.6",
         "@types/jsonwebtoken": "^9.0.7",
-        "@types/node": "^22.9.1"
+        "@types/node": "^22.9.1",
+        "aws-sdk": "^2.1000.0",
+        "typescript": "^4.0.0"
     }
 }
