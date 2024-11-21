@@ -1,4 +1,4 @@
-import { Context as LambdaContext } from 'aws-lambda';
+import type { Context as LambdaContext } from 'aws-lambda';
 
 declare module 'aws-lambda' {
   export interface Context extends LambdaContext {
