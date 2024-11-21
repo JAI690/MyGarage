@@ -1,0 +1,10 @@
+# Definición del API Gateway
+  AutoGarageApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: auto-garage-api
+      StageName: Dev
+      Cors:
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,Authorization'"
+        AllowOrigin: "'*'"
