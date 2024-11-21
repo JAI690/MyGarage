@@ -246,10 +246,3 @@ CreateServiceFunction:
             Projection:
               ProjectionType: ALL
       BillingMode: PAY_PER_REQUEST
-
-
-
-
-Parameters:
-
-
