@@ -10,7 +10,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: services/get.handler
-      Runtime: nodejs16.x
+      Runtime: nodejs20.x
       CodeUri: dist/
       Description: Get a list of services
       MemorySize: 128
@@ -29,7 +29,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: services/create.handler
-      Runtime: nodejs16.x
+      Runtime: nodejs20.x
       CodeUri: dist/
       Description: Create a new service
       MemorySize: 128
@@ -43,9 +43,6 @@ Resources:
             Path: /services
             Method: POST
 
-
-  # DynamoDB Table for Services
-  Resources:
   # Tabla Services
   ServicesTable:
     Type: AWS::DynamoDB::Table
