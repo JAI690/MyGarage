@@ -3,9 +3,8 @@ Transform: AWS::Serverless-2016-10-31
 
 Description: Nested Stack for AutoGarage
 
-
 Resources:
-# Definición del API Gateway
+  # Definición del API Gateway
   AutoGarageApi:
     Type: AWS::Serverless::Api
     Properties:
@@ -18,29 +17,29 @@ Resources:
 
   # Lambda Function: Get Services
   GetServicesFunction:
-  Type: AWS::Serverless::Function
-  Properties:
-    Handler: services/get.handler
-    Runtime: nodejs20.x
-    CodeUri: dist/
-    Description: Get a list of services
-    MemorySize: 128
-    Timeout: 5
-    Policies:
-      - AWSLambdaBasicExecutionRole
-      - Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Action:
-              - dynamodb:Scan
-            Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Services
-    Events:
-      GetApi:
-        Type: Api
-        Properties:
-          RestApiId: !Ref AutoGarageApi
-          Path: /services
-          Method: GET
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: services/get.handler
+      Runtime: nodejs20.x
+      CodeUri: dist/
+      Description: Get a list of services
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Scan
+              Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Services
+      Events:
+        GetApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /services
+            Method: GET
 
   # Lambda Function: Create Service
   CreateServiceFunction:
@@ -62,7 +61,6 @@ Resources:
             Path: /services
             Method: POST
 
-  #USERS
   # Lambda Function: Create User
   CreateUserFunction:
     Type: AWS::Serverless::Function
@@ -104,9 +102,8 @@ Resources:
             Method: POST
       Environment:
         Variables:
-          JWT_SECRET: !Ref JwtSecret
+          JWT_SECRET: your-secret
 
-          
   # Tabla Services
   ServicesTable:
     Type: AWS::DynamoDB::Table
@@ -128,6 +125,7 @@ Resources:
           Projection:
             ProjectionType: ALL
       BillingMode: PAY_PER_REQUEST
+
   # Tabla Vehicles
   VehiclesTable:
     Type: AWS::DynamoDB::Table
@@ -149,6 +147,7 @@ Resources:
           Projection:
             ProjectionType: ALL
       BillingMode: PAY_PER_REQUEST
+
   # Tabla Clients
   ClientsTable:
     Type: AWS::DynamoDB::Table
@@ -170,6 +169,7 @@ Resources:
           Projection:
             ProjectionType: ALL
       BillingMode: PAY_PER_REQUEST
+
   # Tabla WorkOrders
   WorkOrdersTable:
     Type: AWS::DynamoDB::Table
@@ -199,6 +199,7 @@ Resources:
           Projection:
             ProjectionType: ALL
       BillingMode: PAY_PER_REQUEST
+
   # Tabla Invoices
   InvoicesTable:
     Type: AWS::DynamoDB::Table
@@ -220,6 +221,7 @@ Resources:
           Projection:
             ProjectionType: ALL
       BillingMode: PAY_PER_REQUEST
+
   # Tabla Users
   UsersTable:
     Type: AWS::DynamoDB::Table
@@ -241,4 +243,3 @@ Resources:
           Projection:
             ProjectionType: ALL
       BillingMode: PAY_PER_REQUEST
-
