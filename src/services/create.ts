@@ -1,32 +1,32 @@
-import { APIGatewayProxyHandler } from 'aws-lambda';
+import { APIGatewayProxyEvent, Context, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
-export const handler: APIGatewayProxyHandler = async (event) => {
+export const handler =  async (
+    event: APIGatewayProxyEvent,
+    context: Context
+  ): Promise<APIGatewayProxyResult> => {
   try {
     const body = JSON.parse(event.body || '{}');
 
-    // Validar entrada
-    if (!body.name || !body.price || !body.description) {
+    if (!body.name || !body.price) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: 'Invalid input. Missing required fields: name, price, description.' }),
+        body: JSON.stringify({ message: 'Missing required fields: name, price' }),
       };
     }
 
     const newItem = {
-      TableName: 'Services', // Asegúrate de que coincida con el nombre de la tabla en template.yaml
+      TableName: 'Services',
       Item: {
-        ServiceID: new Date().toISOString(), // Generar un ID único (puedes usar UUID también)
+        ServiceID: new Date().toISOString(),
         name: body.name,
         price: body.price,
-        description: body.description,
         createdAt: new Date().toISOString(),
       },
     };
 
-    // Insertar en DynamoDB
     await dynamoDb.put(newItem).promise();
 
     return {
@@ -34,10 +34,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       body: JSON.stringify({ message: 'Service created successfully', service: newItem.Item }),
     };
   } catch (error) {
-    console.error('Error creating service:', error);
+    const typedError = error as Error;
+    console.error('Error creating service:', typedError.message);
+
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Failed to create service', error: error.message }),
+      body: JSON.stringify({ message: 'Failed to create service', error: typedError.message }),
     };
   }
 };

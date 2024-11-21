@@ -1,15 +1,17 @@
-import { APIGatewayProxyHandler } from 'aws-lambda';
+import { APIGatewayProxyEvent, Context, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
-export const handler: APIGatewayProxyHandler = async () => {
+export const handler =  async (
+    event: APIGatewayProxyEvent,
+    context: Context
+  ): Promise<APIGatewayProxyResult> => {
   try {
     const params = {
-      TableName: 'Services', // Asegúrate de que coincida con el nombre de la tabla en template.yaml
+      TableName: 'Services',
     };
 
-    // Escanear todos los elementos en la tabla
     const result = await dynamoDb.scan(params).promise();
 
     return {
@@ -17,10 +19,12 @@ export const handler: APIGatewayProxyHandler = async () => {
       body: JSON.stringify({ services: result.Items }),
     };
   } catch (error) {
-    console.error('Error retrieving services:', error);
+    const typedError = error as Error;
+    console.error('Error retrieving services:', typedError.message);
+
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Failed to retrieve services', error: error.message }),
+      body: JSON.stringify({ message: 'Failed to retrieve services', error: typedError.message }),
     };
   }
 };

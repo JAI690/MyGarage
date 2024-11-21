@@ -3,14 +3,12 @@ import { handler as getServices } from './services/get';
 import { handler as createService } from './services/create';
 
 export const handler = async (
-    event: APIGatewayProxyEvent,
-    context: Context
-  ): Promise<APIGatewayProxyResult> => {
+  event: APIGatewayProxyEvent,
+  context: Context
+): Promise<APIGatewayProxyResult> => {
   try {
-    // Parse the HTTP method and path from the event
     const { httpMethod, path } = event;
 
-    // Routing based on HTTP method and path
     if (httpMethod === 'GET' && path === '/services') {
       return await getServices(event, context);
     } else if (httpMethod === 'POST' && path === '/services') {
@@ -22,10 +20,12 @@ export const handler = async (
       };
     }
   } catch (error) {
-    console.error('Error handling request:', error);
+    const typedError = error as Error;
+    console.error('Error handling request:', typedError.message);
+
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Internal Server Error', error: error.message }),
+      body: JSON.stringify({ message: 'Internal Server Error', error: typedError.message }),
     };
   }
 };
