@@ -64,9 +64,6 @@ CreateServiceFunction:
           Path: /services
           Method: POST
 
-
-
-
 #USERS
 # Lambda Function: Create User
   CreateServiceFunction:
@@ -245,4 +242,5 @@ CreateServiceFunction:
               KeyType: HASH
             Projection:
               ProjectionType: ALL
-      BillingMode: PAY_PER_REQUEST
+        BillingMode: PAY_PER_REQUEST
+
