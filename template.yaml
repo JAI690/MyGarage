@@ -17,7 +17,7 @@ Resources:
         AllowOrigin: "'*'"
 
   # Lambda Function: Get Services
-GetServicesFunction:
+  GetServicesFunction:
   Type: AWS::Serverless::Function
   Properties:
     Handler: services/get.handler
@@ -28,14 +28,12 @@ GetServicesFunction:
     Timeout: 5
     Policies:
       - AWSLambdaBasicExecutionRole
-      - PolicyName: DynamoDBScanPolicy
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: Allow
-              Action:
-                - dynamodb:Scan
-              Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Services
+      - Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - dynamodb:Scan
+            Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Services
     Events:
       GetApi:
         Type: Api
@@ -44,29 +42,29 @@ GetServicesFunction:
           Path: /services
           Method: GET
 
-# Lambda Function: Create Service
-CreateServiceFunction:
-  Type: AWS::Serverless::Function
-  Properties:
-    Handler: services/create.handler
-    Runtime: nodejs20.x
-    CodeUri: dist/
-    Description: Create a new service
-    MemorySize: 128
-    Timeout: 5
-    Policies:
-      - AWSLambdaBasicExecutionRole
-    Events:
-      PostApi:
-        Type: Api
-        Properties:
-          RestApiId: !Ref AutoGarageApi
-          Path: /services
-          Method: POST
-
-#USERS
-# Lambda Function: Create User
+  # Lambda Function: Create Service
   CreateServiceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: services/create.handler
+      Runtime: nodejs20.x
+      CodeUri: dist/
+      Description: Create a new service
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Events:
+        PostApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /services
+            Method: POST
+
+  #USERS
+  # Lambda Function: Create User
+  CreateUserFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: users/create.handler
@@ -85,8 +83,8 @@ CreateServiceFunction:
             Path: /users
             Method: POST
 
-# Lambda Function: Login User
-  CreateServiceFunction:
+  # Lambda Function: Login User
+  LoginFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: users/login.handler
@@ -222,7 +220,7 @@ CreateServiceFunction:
           Projection:
             ProjectionType: ALL
       BillingMode: PAY_PER_REQUEST
-# Tabla Users
+  # Tabla Users
   UsersTable:
     Type: AWS::DynamoDB::Table
     Properties:
