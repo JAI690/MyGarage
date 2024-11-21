@@ -21,7 +21,7 @@ Resources:
     Properties:
       Handler: services/get.handler
       Runtime: nodejs20.x
-      CodeUri: dist/
+      CodeUri: ./dist/
       Description: Get a list of services
       MemorySize: 128
       Timeout: 5
@@ -47,7 +47,7 @@ Resources:
     Properties:
       Handler: services/create.handler
       Runtime: nodejs20.x
-      CodeUri: dist/
+      CodeUri: ./dist/
       Description: Create a new service
       MemorySize: 128
       Timeout: 5
@@ -67,7 +67,7 @@ Resources:
     Properties:
       Handler: users/create.handler
       Runtime: nodejs20.x
-      CodeUri: dist/
+      CodeUri: ./dist/
       Description: Create a new user
       MemorySize: 128
       Timeout: 5
@@ -87,7 +87,7 @@ Resources:
     Properties:
       Handler: users/login.handler
       Runtime: nodejs20.x
-      CodeUri: dist/
+      CodeUri: ./dist/
       Description: Login as a user
       MemorySize: 128
       Timeout: 5
@@ -102,7 +102,7 @@ Resources:
             Method: POST
       Environment:
         Variables:
-          JWT_SECRET: your-secret
+          JWT_SECRET: your
 
   # Tabla Services
   ServicesTable:
