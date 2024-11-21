@@ -9,7 +9,7 @@ Resources:
   AutoGarageApi:
     Type: AWS::Serverless::Api
     Properties:
-      Name: AutoGarageApi
+      Name: auto-garage-api
       StageName: Dev
       Cors:
         AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
