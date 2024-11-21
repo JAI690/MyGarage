@@ -3,19 +3,6 @@ Transform: AWS::Serverless-2016-10-31
 
 Description: Nested Stack for AutoGarage
 
-  Environment:
-    Type: String
-    Default: dev
-    AllowedValues:
-      - dev
-      - staging
-      - prod
-    Description: The environment this stack is deployed to.
-  
-  JwtSecret:
-    Type: String
-    Description: The secret key for signing JWT tokens.
-
 
 Resources:
 # Definición del API Gateway
