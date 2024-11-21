@@ -23,7 +23,7 @@ export const handler = async (
     const queryParams = {
       TableName: 'Users', // Asegúrate de que coincide con el nombre de tu tabla en DynamoDB
       IndexName: 'EmailIndex', // Asegúrate de que el índice secundario global está configurado
-      KeyConditionExpression: 'email = :email',
+      KeyConditionExpression: 'Email = :email',
       ExpressionAttributeValues: {
         ':email': email,
       },
