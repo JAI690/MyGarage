@@ -5,10 +5,23 @@ Description: AutoGarage Backend - Serverless Application
 
 Resources:
   # Incluir API Gateway
-  !Include infraestructura/api.yaml
+  <<: *api
+  <<: *lambdas
+  <<: *dynamodb
 
-  # Incluir Lambdas
-  !Include infraestructura/lambdas.yaml
 
-  # Incluir DynamoDB
-  !Include infraestructura/dynamodb.yaml
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - staging
+      - prod
+    Description: The environment this stack is deployed to.
+  
+  JwtSecret:
+    Type: String
+    Description: The secret key for signing JWT tokens.
+
+
