@@ -78,8 +78,10 @@ Resources:
           - Effect: Allow
             Action:
               - dynamodb:Query
+              - dynamodb:PutItem
+              - dynamodb:GetItem
             Resource:
-              - arn:aws:dynamodb:us-east-1:637423663433:table/Users/index/EmailIndex
+              - arn:aws:dynamodb:us-east-1:637423663433:table/Users/*
       Events:
         PostApi:
           Type: Api
