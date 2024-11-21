@@ -3,28 +3,6 @@ Transform: AWS::Serverless-2016-10-31
 
 Description: Nested Stack for AutoGarage
 
-Resources:
-# Definición del API Gateway
-  AutoGarageApi:
-    Type: AWS::Serverless::Api
-    Properties:
-      Name: auto-garage-api
-      StageName: Dev
-      Cors:
-        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
-        AllowHeaders: "'Content-Type,Authorization'"
-        AllowOrigin: "'*'"
-  LambdasStack:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: infraestructura/lambdas.yaml
-  DynamoDBStack:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: infraestructura/dynamodb.yaml
-
-
-Parameters:
   Environment:
     Type: String
     Default: dev
@@ -37,5 +15,254 @@ Parameters:
   JwtSecret:
     Type: String
     Description: The secret key for signing JWT tokens.
+
+
+Resources:
+# Definición del API Gateway
+  AutoGarageApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: auto-garage-api
+      StageName: Dev
+      Cors:
+        AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+        AllowHeaders: "'Content-Type,Authorization'"
+        AllowOrigin: "'*'"
+
+  # Lambda Function: Get Services
+GetServicesFunction:
+  Type: AWS::Serverless::Function
+  Properties:
+    Handler: services/get.handler
+    Runtime: nodejs20.x
+    CodeUri: dist/
+    Description: Get a list of services
+    MemorySize: 128
+    Timeout: 5
+    Policies:
+      - AWSLambdaBasicExecutionRole
+      - PolicyName: DynamoDBScanPolicy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Scan
+              Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Services
+    Events:
+      GetApi:
+        Type: Api
+        Properties:
+          RestApiId: !Ref AutoGarageApi
+          Path: /services
+          Method: GET
+
+# Lambda Function: Create Service
+CreateServiceFunction:
+  Type: AWS::Serverless::Function
+  Properties:
+    Handler: services/create.handler
+    Runtime: nodejs20.x
+    CodeUri: dist/
+    Description: Create a new service
+    MemorySize: 128
+    Timeout: 5
+    Policies:
+      - AWSLambdaBasicExecutionRole
+    Events:
+      PostApi:
+        Type: Api
+        Properties:
+          RestApiId: !Ref AutoGarageApi
+          Path: /services
+          Method: POST
+
+
+
+
+#USERS
+# Lambda Function: Create User
+  CreateServiceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: users/create.handler
+      Runtime: nodejs20.x
+      CodeUri: dist/
+      Description: Create a new user
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Events:
+        PostApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /users
+            Method: POST
+
+# Lambda Function: Login User
+  CreateServiceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: users/login.handler
+      Runtime: nodejs20.x
+      CodeUri: dist/
+      Description: Login as a user
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Events:
+        PostApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /login
+            Method: POST
+      Environment:
+        Variables:
+          JWT_SECRET: !Ref JwtSecret
+
+          
+  # Tabla Services
+  ServicesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Services
+      AttributeDefinitions:
+        - AttributeName: ServiceID
+          AttributeType: S
+        - AttributeName: Name
+          AttributeType: S
+      KeySchema:
+        - AttributeName: ServiceID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: NameIndex
+          KeySchema:
+            - AttributeName: Name
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+  # Tabla Vehicles
+  VehiclesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Vehicles
+      AttributeDefinitions:
+        - AttributeName: VehicleID
+          AttributeType: S
+        - AttributeName: OwnerID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: VehicleID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: OwnerIndex
+          KeySchema:
+            - AttributeName: OwnerID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+  # Tabla Clients
+  ClientsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Clients
+      AttributeDefinitions:
+        - AttributeName: ClientID
+          AttributeType: S
+        - AttributeName: Email
+          AttributeType: S
+      KeySchema:
+        - AttributeName: ClientID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: EmailIndex
+          KeySchema:
+            - AttributeName: Email
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+  # Tabla WorkOrders
+  WorkOrdersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: WorkOrders
+      AttributeDefinitions:
+        - AttributeName: WorkOrderID
+          AttributeType: S
+        - AttributeName: ClientID
+          AttributeType: S
+        - AttributeName: VehicleID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: WorkOrderID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: ClientIndex
+          KeySchema:
+            - AttributeName: ClientID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: VehicleIndex
+          KeySchema:
+            - AttributeName: VehicleID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+  # Tabla Invoices
+  InvoicesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Invoices
+      AttributeDefinitions:
+        - AttributeName: InvoiceID
+          AttributeType: S
+        - AttributeName: ClientID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: InvoiceID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: ClientIndex
+          KeySchema:
+            - AttributeName: ClientID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+# Tabla Users
+  UsersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Users
+      AttributeDefinitions:
+        - AttributeName: UserID
+          AttributeType: S
+        - AttributeName: Email
+          AttributeType: S
+      KeySchema:
+        - AttributeName: UserID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: EmailIndex
+          KeySchema:
+            - AttributeName: Email
+              KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+
+
+
+
+Parameters:
 
 
