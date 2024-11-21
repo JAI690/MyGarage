@@ -1,13 +1,12 @@
 import { APIGatewayProxyEvent, Context, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
-import { authorize } from '../utils/authorize';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
-export const handler =  authorize(['Admin'])(async (
-    event: APIGatewayProxyEvent,
-    context: Context
-  ): Promise<APIGatewayProxyResult> => {
+export const handler = (async (
+  event: APIGatewayProxyEvent,
+  context: Context
+): Promise<APIGatewayProxyResult> => {
   try {
     const body = JSON.parse(event.body || '{}');
 
@@ -44,3 +43,4 @@ export const handler =  authorize(['Admin'])(async (
     };
   }
 });
+

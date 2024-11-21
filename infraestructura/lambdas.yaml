@@ -1,39 +1,63 @@
 # Lambda Function: Get Services
-  GetServicesFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: services/get.handler
-      Runtime: nodejs20.x
-      CodeUri: dist/
-      Description: Get a list of services
-      MemorySize: 128
-      Timeout: 5
-      Policies:
-        - AWSLambdaBasicExecutionRole
-        - PolicyName: DynamoDBScanPolicy
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - dynamodb:Scan
-                Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Services
-      Events:
-        GetApi:
-          Type: Api
-          Properties:
-            RestApiId: !Ref AutoGarageApi
-            Path: /services
-            Method: GET
+GetServicesFunction:
+  Type: AWS::Serverless::Function
+  Properties:
+    Handler: services/get.handler
+    Runtime: nodejs20.x
+    CodeUri: dist/
+    Description: Get a list of services
+    MemorySize: 128
+    Timeout: 5
+    Policies:
+      - AWSLambdaBasicExecutionRole
+      - PolicyName: DynamoDBScanPolicy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Scan
+              Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Services
+    Events:
+      GetApi:
+        Type: Api
+        Properties:
+          RestApiId: !Ref AutoGarageApi
+          Path: /services
+          Method: GET
 
-  # Lambda Function: Create Service
+# Lambda Function: Create Service
+CreateServiceFunction:
+  Type: AWS::Serverless::Function
+  Properties:
+    Handler: services/create.handler
+    Runtime: nodejs20.x
+    CodeUri: dist/
+    Description: Create a new service
+    MemorySize: 128
+    Timeout: 5
+    Policies:
+      - AWSLambdaBasicExecutionRole
+    Events:
+      PostApi:
+        Type: Api
+        Properties:
+          RestApiId: !Ref AutoGarageApi
+          Path: /services
+          Method: POST
+
+
+
+
+#USERS
+# Lambda Function: Create User
   CreateServiceFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: services/create.handler
+      Handler: users/create.handler
       Runtime: nodejs20.x
       CodeUri: dist/
-      Description: Create a new service
+      Description: Create a new user
       MemorySize: 128
       Timeout: 5
       Policies:
@@ -43,5 +67,28 @@
           Type: Api
           Properties:
             RestApiId: !Ref AutoGarageApi
-            Path: /services
+            Path: /users
             Method: POST
+
+# Lambda Function: Login User
+  CreateServiceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: users/login.handler
+      Runtime: nodejs20.x
+      CodeUri: dist/
+      Description: Login as a user
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Events:
+        PostApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /login
+            Method: POST
+      Environment:
+        Variables:
+          JWT_SECRET: !Ref JwtSecret
