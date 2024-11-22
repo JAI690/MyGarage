@@ -6,7 +6,7 @@ import * as uuid from 'uuid';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
-export const handler = authorize(['Admin'])(async (
+export const handler = authorize(['Cliente'])(async (
     event: APIGatewayProxyEvent,
     context: CustomContext
   ): Promise<APIGatewayProxyResult> => {

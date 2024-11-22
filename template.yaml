@@ -123,7 +123,6 @@ Resources:
                 - dynamodb:Query
                 - dynamodb:GetItem
               Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Users/*
-
       Events:
         PostApi:
           Type: Api
@@ -135,33 +134,34 @@ Resources:
         Variables:
           JWT_SECRET: your-secret-key
 
+  #Lambda Crear Vehiculo
   CreateVehicleFunction:
-  Type: AWS::Serverless::Function
-  Properties:
-    Handler: vehicles/create.handler
-    Runtime: nodejs20.x
-    CodeUri: dist/
-    Description: Create a new vehicle associated with a user
-    MemorySize: 128
-    Timeout: 5
-    Policies:
-      - AWSLambdaBasicExecutionRole
-      - Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Action:
-              - dynamodb:PutItem
-            Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Vehicles
-    Events:
-      PostApi:
-        Type: Api
-        Properties:
-          RestApiId: !Ref AutoGarageApi
-          Path: /vehicles
-          Method: POST
-    Environment:
-        Variables:
-          JWT_SECRET: your-secret-key
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: vehicles/create.handler
+      Runtime: nodejs20.x
+      CodeUri: dist/
+      Description: Create a new vehicle associated with a user
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:PutItem
+              Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Vehicles
+      Events:
+        PostApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /vehicles
+            Method: POST
+      Environment:
+          Variables:
+            JWT_SECRET: your-secret-key
 
   # Tabla Services
   ServicesTable:
@@ -187,25 +187,25 @@ Resources:
 
   # Tabla Vehicles
   VehiclesTable:
-  Type: AWS::DynamoDB::Table
-  Properties:
-    TableName: Vehicles
-    AttributeDefinitions:
-      - AttributeName: VehicleID
-        AttributeType: S
-      - AttributeName: UserID
-        AttributeType: S
-    KeySchema:
-      - AttributeName: VehicleID
-        KeyType: HASH
-    GlobalSecondaryIndexes:
-      - IndexName: UserIndex
-        KeySchema:
-          - AttributeName: UserID
-            KeyType: HASH
-        Projection:
-          ProjectionType: ALL
-    BillingMode: PAY_PER_REQUEST
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Vehicles
+      AttributeDefinitions:
+        - AttributeName: VehicleID
+          AttributeType: S
+        - AttributeName: UserID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: VehicleID
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: UserIndex
+          KeySchema:
+            - AttributeName: UserID
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
 
   # Tabla Clients
   ClientsTable:
