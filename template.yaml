@@ -6,8 +6,8 @@ Description: Nested Stack for AutoGarage
 Globals:
     Api:
         Cors:
-            AllowMethods: "'GET,POST,OPTIONS'"
-            AllowHeaders: "'content-type'"
+            AllowMethods: "'GET,POST,OPTIONS,PUT,DELETE'"
+            AllowHeaders: "'Content-Type,Authorization'"
             AllowOrigin: "'*'"
 Resources:
   # Definición del API Gateway
@@ -18,7 +18,7 @@ Resources:
       StageName: Dev
       Cors:
         AllowMethods: "'GET,POST,OPTIONS,PUT,DELETE'"
-        AllowHeaders: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'"
+        AllowHeaders: "'Content-Type,Authorization'"
         AllowOrigin: "'*'"
 
   # Lambda Function: Get Services
