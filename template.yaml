@@ -208,9 +208,18 @@ Resources:
               Action:
                 - dynamodb:GetItem
                 - dynamodb:PutItem
+                - dynamodb:BatchGetItem
               Resource:
                 - arn:aws:dynamodb:us-east-1:637423663433:table/Vehicles
                 - arn:aws:dynamodb:us-east-1:637423663433:table/WorkOrders
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:BatchGetItem
+                - dynamodb:GetItem
+              Resource:
+                - "arn:aws:dynamodb:us-east-1:637423663433:table/Services"
+                - "arn:aws:dynamodb:us-east-1:637423663433:table/Services/index/*"
       Events:
         PostApi:
           Type: Api
