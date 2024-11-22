@@ -162,6 +162,33 @@ Resources:
       Environment:
           Variables:
             JWT_SECRET: your-secret-key
+  
+  # Lambda Function: Get Vehicles by User
+  GetVehiclesByUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: vehicles/getByUser.handler
+      Runtime: nodejs20.x
+      CodeUri: dist/
+      Description: Get all vehicles associated with a user
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+              Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Vehicles/index/UserIndex
+      Events:
+        GetApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /vehicles
+            Method: GET
+
 
   # Tabla Services
   ServicesTable:
