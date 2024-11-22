@@ -2,8 +2,8 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs'; // Importa bcryptjs para hashear contraseñas
-import { isValidEmail } from '../utils/extras';
-import {corsMiddleware}  from '../utils/corsMiddleware';
+import { isValidEmail } from '../common/utils/extras';
+import {corsMiddleware}  from '../common/utils/corsMiddleware';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 

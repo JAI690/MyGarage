@@ -1,9 +1,9 @@
 import { APIGatewayProxyEvent, Context, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
-import { authorize } from '../utils/authorize';
-import type { CustomContext } from '../types/CustomContext';
+import { authorize } from '../common/utils/authorize';
+import type { CustomContext } from '../common/types/CustomContext';
 import * as uuid from 'uuid';
-import {corsMiddleware}  from '../utils/corsMiddleware';
+import {corsMiddleware}  from '../common/utils/corsMiddleware';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 

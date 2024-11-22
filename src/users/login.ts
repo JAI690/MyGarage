@@ -2,8 +2,8 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
-import type { CustomContext } from '../types/CustomContext';
-import {corsMiddleware}  from '../utils/corsMiddleware';
+import type { CustomContext } from '../common/types/CustomContext';
+import {corsMiddleware}  from '../common/utils/corsMiddleware';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
