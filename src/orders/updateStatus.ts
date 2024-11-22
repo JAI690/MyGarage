@@ -33,13 +33,12 @@ export const handler = authorize(['Admin', 'Mechanic'])(async (
     const params = {
         TableName: 'WorkOrders',
         Key: { OrderID: data.orderId },
-        UpdateExpression: 'SET #status = :status, AssignedTo = :mechanicId, UpdatedAt = :updatedAt',
+        UpdateExpression: 'SET #status = :status, UpdatedAt = :updatedAt',
         ExpressionAttributeNames: {
           '#status': 'Status', // Alias para la palabra reservada 'Status'
         },
         ExpressionAttributeValues: {
           ':status': 'Assigned',
-          ':mechanicId': data.mechanicId,
           ':updatedAt': new Date().toISOString(),
         },
         ReturnValues: 'ALL_NEW',
