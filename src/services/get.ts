@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent, Context, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import type { CustomContext } from '../types/CustomContext';
+import {corsMiddleware}  from '../utils/corsMiddleware';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
@@ -17,11 +18,6 @@ export const handler =  async (
 
     return {
       statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Headers" : "Content-Type",
-        "Access-Control-Allow-Origin": "*", 
-        "Access-Control-Allow-Methods": "GET" 
-      },
       body: JSON.stringify({ services: result.Items }),
     };
   } catch (error) {
@@ -34,3 +30,5 @@ export const handler =  async (
     };
   }
 };
+
+export const endpointHandler = corsMiddleware(handler);

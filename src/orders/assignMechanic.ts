@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import { authorize } from '../utils/authorize';
 import type { CustomContext } from '../types/CustomContext';
+import {corsMiddleware}  from '../utils/corsMiddleware';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
@@ -53,12 +54,9 @@ export const handler = authorize(['Admin'])(async (
     console.error('Error assigning mechanic:', error);
     return {
       statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Headers" : "Content-Type",
-        "Access-Control-Allow-Origin": "*", 
-        "Access-Control-Allow-Methods": "POST" 
-    },
       body: JSON.stringify({ message: 'Failed to assign mechanic', error: typedError.message }),
     };
   }
 });
+
+export const endpointHandler = corsMiddleware(handler);

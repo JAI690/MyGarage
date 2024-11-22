@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, Context, APIGatewayProxyResult } from 'aws-lambda
 import { DynamoDB } from 'aws-sdk';
 import { authorize } from '../utils/authorize';
 import type { CustomContext } from '../types/CustomContext';
+import {corsMiddleware}  from '../utils/corsMiddleware';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
@@ -26,11 +27,6 @@ export const handler = authorize(['Cliente','Mechanic'])(async (
 
     return {
       statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Headers" : "Content-Type",
-        "Access-Control-Allow-Origin": "*", 
-        "Access-Control-Allow-Methods": "GET" 
-      },
       body: JSON.stringify({
         message: 'Orders retrieved successfully',
         orders: result.Items,
@@ -44,3 +40,5 @@ export const handler = authorize(['Cliente','Mechanic'])(async (
     };
   }
 });
+
+export const endpointHandler = corsMiddleware(handler);

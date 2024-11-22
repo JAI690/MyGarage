@@ -2,6 +2,7 @@ import { APIGatewayProxyHandler } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
+import {corsMiddleware}  from '../utils/corsMiddleware';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -53,11 +54,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
       return {
         statusCode: 200,
-        headers: {
-          "Access-Control-Allow-Headers" : "Content-Type",
-          "Access-Control-Allow-Origin": "*", 
-          "Access-Control-Allow-Methods": "POST" 
-        },
         body: JSON.stringify({ token }),
       };
     }
@@ -74,3 +70,5 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     };
   }
 };
+
+export const endpointHandler = corsMiddleware(handler);

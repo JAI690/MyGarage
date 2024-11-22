@@ -3,6 +3,7 @@ import { DynamoDB } from 'aws-sdk';
 import { authorize } from '../utils/authorize';
 import type { CustomContext } from '../types/CustomContext';
 import * as uuid from 'uuid';
+import {corsMiddleware}  from '../utils/corsMiddleware';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
@@ -69,23 +70,15 @@ export const handler = authorize(['Cliente'])(async (
 
     return {
       statusCode: 201,
-      headers: {
-        "Access-Control-Allow-Headers" : "Content-Type",
-        "Access-Control-Allow-Origin": "*", 
-        "Access-Control-Allow-Methods": "POST" 
-      },
       body: JSON.stringify({ message: 'Order created successfully', orderId }),
     };
   } catch (error) {
     console.error('Error creating order:', error);
     return {
       statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Headers" : "Content-Type",
-        "Access-Control-Allow-Origin": "*", 
-        "Access-Control-Allow-Methods": "POST" 
-      },
       body: JSON.stringify({ message: 'Failed to create order', error: (error as Error).message }),
     };
   }
 });
+
+export const endpointHandler = corsMiddleware(handler);

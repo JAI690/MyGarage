@@ -3,6 +3,7 @@ import { DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs'; // Importa bcryptjs para hashear contraseñas
 import { isValidEmail } from '../utils/extras';
+import {corsMiddleware}  from '../utils/corsMiddleware';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
@@ -68,11 +69,6 @@ export const handler = async (
       statusCode: 201,
       body: JSON.stringify({
         message: 'User created successfully',
-        headers: {
-          "Access-Control-Allow-Headers" : "Content-Type",
-          "Access-Control-Allow-Origin": "*", 
-          "Access-Control-Allow-Methods": "POST" 
-        },
         user: { UserID: userId, email, role },
       }),
     };
@@ -84,3 +80,5 @@ export const handler = async (
     };
   }
 };
+
+export const endpointHandler = corsMiddleware(handler);
