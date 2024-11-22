@@ -270,6 +270,33 @@ Resources:
             Path: /orders/status
             Method: PUT
 
+  GetClientOrdersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: orders/getByUser.handler
+      Runtime: nodejs20.x
+      CodeUri: ./dist/
+      Description: Get all orders for a specific client
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+              Resource:
+                - arn:aws:dynamodb:us-east-1:637423663433:table/WorkOrders/index/ClientIndex
+      Events:
+        GetApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /orders
+            Method: GET
+
+
 
   # Tabla Services
   ServicesTable:
