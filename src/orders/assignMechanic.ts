@@ -41,6 +41,11 @@ export const handler = authorize(['Admin'])(async (
 
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "*",  
+        "Access-Control-Allow-Methods": "POST" 
+      },
       body: JSON.stringify({ message: 'Mechanic assigned successfully', order: result.Attributes }),
     };
   } catch (error) {
@@ -48,6 +53,11 @@ export const handler = authorize(['Admin'])(async (
     console.error('Error assigning mechanic:', error);
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "*", 
+        "Access-Control-Allow-Methods": "POST" 
+    },
       body: JSON.stringify({ message: 'Failed to assign mechanic', error: typedError.message }),
     };
   }

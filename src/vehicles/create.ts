@@ -53,6 +53,11 @@ export const handler = authorize(['Cliente'])(async (
 
     return {
       statusCode: 201,
+      headers: {
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "*", 
+        "Access-Control-Allow-Methods": "POST" 
+      },
       body: JSON.stringify({ message: 'Vehicle created successfully', vehicleId }),
     };
   } catch (error) {

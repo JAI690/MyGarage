@@ -48,6 +48,11 @@ export const handler = authorize(['Admin', 'Mechanic'])(async (
 
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "*", 
+        "Access-Control-Allow-Methods": "PUT" 
+      },
       body: JSON.stringify({ message: 'Order status updated successfully', order: result.Attributes }),
     };
   } catch (error) {

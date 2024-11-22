@@ -26,6 +26,11 @@ export const handler = authorize(['Cliente','Mechanic'])(async (
 
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "*", 
+        "Access-Control-Allow-Methods": "GET" 
+      },
       body: JSON.stringify({
         message: 'Orders retrieved successfully',
         orders: result.Items,

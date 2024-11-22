@@ -68,6 +68,11 @@ export const handler = async (
       statusCode: 201,
       body: JSON.stringify({
         message: 'User created successfully',
+        headers: {
+          "Access-Control-Allow-Headers" : "Content-Type",
+          "Access-Control-Allow-Origin": "*", 
+          "Access-Control-Allow-Methods": "POST" 
+        },
         user: { UserID: userId, email, role },
       }),
     };

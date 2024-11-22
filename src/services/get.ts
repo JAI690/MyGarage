@@ -17,6 +17,11 @@ export const handler =  async (
 
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "*", 
+        "Access-Control-Allow-Methods": "GET" 
+      },
       body: JSON.stringify({ services: result.Items }),
     };
   } catch (error) {

@@ -35,6 +35,11 @@ export const handler =  authorize(['Admin'])(async (
 
     return {
       statusCode: 201,
+      headers: {
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "*", 
+        "Access-Control-Allow-Methods": "POST" 
+      },
       body: JSON.stringify({ message: 'Service created successfully', service: newItem.Item }),
     };
   } catch (error) {
