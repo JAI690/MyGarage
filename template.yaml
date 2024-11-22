@@ -289,7 +289,7 @@ Resources:
   WorkOrdersTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: WorkOrders
+      TableName: WorkOrder
       AttributeDefinitions:
         - AttributeName: OrderID
           AttributeType: S
