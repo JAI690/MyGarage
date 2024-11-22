@@ -13,7 +13,7 @@ Resources:
       StageName: Dev
       Cors:
         AllowMethods: "'GET,POST,OPTIONS,PUT,DELETE'"
-        AllowHeaders: "'Content-Type,Access-Control-Allow-Origin'"
+        AllowHeaders: "'Content-Type,Access-Control-Allow-Origin,Authorization'"
         AllowOrigin: "'*'"
 
   # Lambda Function: Get Services
