@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { APIGatewayProxyEvent, Context, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import { authorize } from '../utils/authorize';
 import type { CustomContext } from '../types/CustomContext';
@@ -11,62 +11,71 @@ export const handler = authorize(['Cliente'])(async (
   context: CustomContext
 ): Promise<APIGatewayProxyResult> => {
   try {
+    const userId = context.authorizer?.user.userId;
+
     const data = JSON.parse(event.body || '{}');
 
     // Validar campos requeridos
-    if (!data.vehicleId || !data.services || data.services.length === 0) {
+    if (!data.vehicleId || !Array.isArray(data.services) || data.services.length === 0) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: 'Missing required fields: VehicleID and Services' }),
+        body: JSON.stringify({ message: 'Missing required fields: vehicleId, services' }),
       };
     }
 
-    // Extraer ClientID del contexto
-    const clientId = context.authorizer?.user.userId;
-
-    // Validar que el vehículo pertenece al cliente
-    const vehicleParams = {
-      TableName: 'Vehicles',
-      Key: { VehicleID: data.vehicleId },
+    // Validar que los servicios existen en la tabla Services
+    const serviceIds = data.services;
+    const serviceValidationParams = {
+      TableName: 'Services',
+      RequestItems: {
+        'Services': {
+          Keys: serviceIds.map((id: string) => ({ ServiceID: id }))
+        }
+      }
     };
 
-    const vehicle = await dynamoDb.get(vehicleParams).promise();
-    if (!vehicle.Item || vehicle.Item.UserID !== clientId) {
+    const serviceValidationResult = await dynamoDb.batchGet(serviceValidationParams).promise();
+
+    if (
+      !serviceValidationResult.Responses?.Services ||
+      serviceValidationResult.Responses.Services.length !== serviceIds.length
+    ) {
       return {
-        statusCode: 403,
-        body: JSON.stringify({ message: 'Unauthorized: Vehicle does not belong to the user' }),
+        statusCode: 400,
+        body: JSON.stringify({
+          message: 'One or more services are invalid',
+          invalidServices: serviceIds.filter(
+            (id: string) => !serviceValidationResult.Responses?.Services.some((s) => s.ServiceID === id)
+          ),
+        }),
       };
     }
 
-    // Crear una nueva orden de servicio
+    // Crear una nueva orden
     const orderId = uuid.v4();
     const params = {
       TableName: 'WorkOrders',
       Item: {
-        OrderID: orderId,
-        ClientID: clientId,
+        WorkOrderID: orderId,
+        ClientID: userId,
         VehicleID: data.vehicleId,
-        Services: data.services,
+        Services: serviceIds,
         Status: 'Pending',
-        Notes: data.notes || null,
         CreatedAt: new Date().toISOString(),
-        UpdatedAt: new Date().toISOString(),
       },
     };
 
-    // Guardar la orden en DynamoDB
     await dynamoDb.put(params).promise();
 
     return {
       statusCode: 201,
-      body: JSON.stringify({ message: 'Work order created successfully', orderId }),
+      body: JSON.stringify({ message: 'Order created successfully', orderId }),
     };
   } catch (error) {
-    const typedError = error as Error;
-    console.error('Error creating work order:', error);
+    console.error('Error creating order:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Failed to create work order', error: typedError.message }),
+      body: JSON.stringify({ message: 'Failed to create order', error: (error as Error).message }),
     };
   }
 });
