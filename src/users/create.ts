@@ -23,7 +23,7 @@ export const handler = async (
     const queryParams = {
       TableName: 'Users',
       IndexName: 'EmailIndex',
-      KeyConditionExpression: 'email = :email',
+      KeyConditionExpression: 'Email = :email',
       ExpressionAttributeValues: {
         ':email': email,
       },
