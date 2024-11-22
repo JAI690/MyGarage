@@ -55,7 +55,10 @@ export const handler = async (event: APIGatewayProxyEvent, context: CustomContex
 
       return {
         statusCode: 200,
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({ 
+          token,
+          role: user.Role,
+        }),
       };
     }
 
