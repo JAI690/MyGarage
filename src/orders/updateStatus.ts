@@ -31,14 +31,18 @@ export const handler = authorize(['Admin', 'Mechanic'])(async (
 
     // Actualizar la orden
     const params = {
-      TableName: 'WorkOrders',
-      Key: { OrderID: data.orderId },
-      UpdateExpression: 'SET Status = :status, UpdatedAt = :updatedAt',
-      ExpressionAttributeValues: {
-        ':status': data.status,
-        ':updatedAt': new Date().toISOString(),
-      },
-      ReturnValues: 'ALL_NEW',
+        TableName: 'WorkOrders',
+        Key: { OrderID: data.orderId },
+        UpdateExpression: 'SET #status = :status, AssignedTo = :mechanicId, UpdatedAt = :updatedAt',
+        ExpressionAttributeNames: {
+          '#status': 'Status', // Alias para la palabra reservada 'Status'
+        },
+        ExpressionAttributeValues: {
+          ':status': 'Assigned',
+          ':mechanicId': data.mechanicId,
+          ':updatedAt': new Date().toISOString(),
+        },
+        ReturnValues: 'ALL_NEW',
     };
 
     const result = await dynamoDb.update(params).promise();
