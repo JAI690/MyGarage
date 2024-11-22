@@ -33,7 +33,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       const user = result.Items[0];
 
       // Validar contraseña
-      const isValidPassword = await bcrypt.compare(data.password, user.PasswordHash);
+      const isValidPassword = await bcrypt.compare(data.password, user.Password);
       if (!isValidPassword) {
         return {
           statusCode: 401,
