@@ -324,6 +324,22 @@ Resources:
             Path: /orders/open
             Method: GET
 
+  DeleteServiceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/services/deleteService.endpointHandler
+      Runtime: nodejs20.x
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ServicesTable
+      Events:
+        DeleteApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /services/{id}
+            Method: DELETE
+      
 
 
   # Tabla Services
