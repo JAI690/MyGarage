@@ -21,7 +21,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     const params = {
       TableName: 'Users',
       IndexName: 'EmailIndex',
-      KeyConditionExpression: 'email = :email',
+      KeyConditionExpression: 'Email = :email',
       ExpressionAttributeValues: {
         ':email': data.email,
       },
