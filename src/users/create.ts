@@ -46,9 +46,9 @@ export const handler = async (
       TableName: 'Users',
       Item: {
         UserID: userId,
-        email,
-        password: hashedPassword, // Almacena la contraseña hasheada
-        role,
+        Email: email,
+        Password: password: hashedPassword, // Almacena la contraseña hasheada
+        Role: role,
         createdAt: new Date().toISOString(),
       },
     };
