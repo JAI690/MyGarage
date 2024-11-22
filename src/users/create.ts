@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs'; // Importa bcryptjs para hashear contraseñas
+import { isValidEmail } from '../utils/extras';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
@@ -16,6 +17,14 @@ export const handler = async (
       return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Missing required fields: email, password, role' }),
+      };
+    }
+
+    // Verificar que si es un correo correcto
+    if (!isValidEmail(email)) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Invalid email format.' }),
       };
     }
 
