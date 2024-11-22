@@ -10,7 +10,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   try {
     const data = JSON.parse(event.body || '{}');
 
-    if (!data.Email || !data.Password) {
+    if (!data.email || !data.password) {
       return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Email and Password are required.' }),
@@ -21,9 +21,9 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     const params = {
       TableName: 'Users',
       IndexName: 'EmailIndex',
-      KeyConditionExpression: 'Email = :email',
+      KeyConditionExpression: 'email = :email',
       ExpressionAttributeValues: {
-        ':email': data.Email,
+        ':email': data.email,
       },
     };
 
@@ -33,7 +33,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       const user = result.Items[0];
 
       // Validar contraseña
-      const isValidPassword = await bcrypt.compare(data.Password, user.PasswordHash);
+      const isValidPassword = await bcrypt.compare(data.password, user.PasswordHash);
       if (!isValidPassword) {
         return {
           statusCode: 401,

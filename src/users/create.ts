@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
-import { v4 as uuidv4 } from 'uuid'; // Para generar un UserID único
+import { v4 as uuidv4 } from 'uuid';
+import bcrypt from 'bcryptjs'; // Importa bcryptjs para hashear contraseñas
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
@@ -8,7 +9,6 @@ export const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
-    // Validar el cuerpo de la solicitud
     const body = JSON.parse(event.body || '{}');
     const { email, password, role } = body;
 
@@ -19,34 +19,35 @@ export const handler = async (
       };
     }
 
-    // Buscar si el email ya existe en la tabla
+    // Verificar si el email ya existe
     const queryParams = {
-      TableName: 'Users', // Asegúrate de que coincide con el nombre de tu tabla en DynamoDB
-      IndexName: 'EmailIndex', // Asegúrate de que el índice secundario global está configurado
-      KeyConditionExpression: 'Email = :email',
+      TableName: 'Users',
+      IndexName: 'EmailIndex',
+      KeyConditionExpression: 'email = :email',
       ExpressionAttributeValues: {
         ':email': email,
       },
     };
 
     const queryResult = await dynamoDb.query(queryParams).promise();
-
     if (queryResult.Items && queryResult.Items.length > 0) {
-      // Si ya existe un usuario con el mismo email
       return {
-        statusCode: 409, // Conflicto
+        statusCode: 409,
         body: JSON.stringify({ message: 'User with this email already exists' }),
       };
     }
 
-    // Crear un nuevo usuario si no existe
+    // Hashear la contraseña
+    const hashedPassword = bcrypt.hashSync(password, 10); // 10 es el factor de costo recomendado
+
+    // Crear un nuevo usuario
     const userId = uuidv4();
     const params = {
       TableName: 'Users',
       Item: {
         UserID: userId,
         email,
-        password, // En producción, deberías hashear la contraseña antes de almacenarla
+        password: hashedPassword, // Almacena la contraseña hasheada
         role,
         createdAt: new Date().toISOString(),
       },
@@ -62,14 +63,10 @@ export const handler = async (
       }),
     };
   } catch (error) {
-    // Manejar errores genéricos
     console.error('Error creating user:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        message: 'Failed to create user',
-        error: (error as Error).message,
-      }),
+      body: JSON.stringify({ message: 'Failed to create user', error: (error as Error).message }),
     };
   }
 };
