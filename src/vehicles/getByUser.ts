@@ -40,10 +40,11 @@ export const handler = authorize(['Cliente'])(async (
       }),
     };
   } catch (error) {
+    const typedError = error as Error;
     console.error('Error retrieving vehicles:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Failed to retrieve vehicles', error: error.message }),
+      body: JSON.stringify({ message: 'Failed to retrieve vehicles', error: typedError.message }),
     };
   }
 });
