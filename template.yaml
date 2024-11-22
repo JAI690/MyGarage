@@ -3,6 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 
 Description: Nested Stack for AutoGarage
 
+
 Resources:
   # Definición del API Gateway
   AutoGarageApi:
@@ -11,9 +12,9 @@ Resources:
       Name: auto-garage-api
       StageName: Dev
       Cors:
-        AllowMethods: "'GET,POST,OPTIONS,PUT,DELETE'"
-        AllowHeaders: "'Content-Type,Authorization'"
-        AllowOrigin: "'*'"
+        AllowMethods: "GET,POST,OPTIONS,PUT,DELETE"
+        AllowHeaders: "Content-Type,Authorization"
+        AllowOrigin: "*"
 
   # Lambda Function: Get Services
   GetServicesFunction:
