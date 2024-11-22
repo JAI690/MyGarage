@@ -20,7 +20,7 @@ Resources:
   GetServicesFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: services/get.handler
+      Handler: services/get.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./dist/
       Description: Get a list of services
@@ -46,7 +46,7 @@ Resources:
   CreateServiceFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: services/create.handler
+      Handler: services/create.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./dist/
       Description: Create a new service
@@ -76,7 +76,7 @@ Resources:
   CreateUserFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: users/create.handler
+      Handler: users/create.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./dist/
       Description: Create a new user
@@ -109,7 +109,7 @@ Resources:
   LoginFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: users/login.handler
+      Handler: users/login.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./dist/
       Description: Login as a user
@@ -139,7 +139,7 @@ Resources:
   CreateVehicleFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: vehicles/create.handler
+      Handler: vehicles/create.endpointHandler
       Runtime: nodejs20.x
       CodeUri: dist/
       Description: Create a new vehicle associated with a user
@@ -168,7 +168,7 @@ Resources:
   GetVehiclesByUserFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: vehicles/getByUser.handler
+      Handler: vehicles/getByUser.endpointHandler
       Runtime: nodejs20.x
       CodeUri: dist/
       Description: Get all vehicles associated with a user
@@ -194,7 +194,7 @@ Resources:
   CreateWorkOrderFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: orders/create.handler
+      Handler: orders/create.endpointHandler
       Runtime: nodejs20.x
       CodeUri: dist/
       Description: Create a new work order for a vehicle
@@ -223,7 +223,7 @@ Resources:
   AssignMechanicFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: orders/assignMechanic.handler
+      Handler: orders/assignMechanic.endpointHandler
       Runtime: nodejs20.x
       CodeUri: dist/
       Description: Assign a mechanic to a work order
@@ -249,7 +249,7 @@ Resources:
   UpdateOrderStatusFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: orders/updateStatus.handler
+      Handler: orders/updateStatus.endpointHandler
       Runtime: nodejs20.x
       CodeUri: dist/
       Description: Update the status of a work order
@@ -274,7 +274,7 @@ Resources:
   GetClientOrdersFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: orders/getByUser.handler
+      Handler: orders/getByUser.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./dist/
       Description: Get all orders for a specific client
