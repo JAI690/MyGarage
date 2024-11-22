@@ -30,7 +30,7 @@ export const authorize = (allowedRoles: string[]) => {
 
         context.authorizer = {
           user: {
-            userId: decoded.UserId,
+            userId: decoded.UserID,
             role: decoded.Role,
           },
         };
