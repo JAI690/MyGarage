@@ -189,6 +189,35 @@ Resources:
             Path: /vehicles
             Method: GET
 
+  # Lambda Function: Create Work Order
+  CreateWorkOrderFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: orders/create.handler
+      Runtime: nodejs20.x
+      CodeUri: dist/
+      Description: Create a new work order for a vehicle
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+              Resource:
+                - arn:aws:dynamodb:us-east-1:637423663433:table/Vehicles
+                - arn:aws:dynamodb:us-east-1:637423663433:table/WorkOrders
+      Events:
+        PostApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /orders
+            Method: POST
+
 
   # Tabla Services
   ServicesTable:
