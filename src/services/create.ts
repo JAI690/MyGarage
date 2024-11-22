@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, Context, APIGatewayProxyResult } from 'aws-lambda
 import { DynamoDB } from 'aws-sdk';
 import { authorize } from '../utils/authorize';
 import type { CustomContext } from '../types/CustomContext';
+import * as uuid from 'uuid';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
@@ -19,10 +20,11 @@ export const handler =  authorize(['Admin'])(async (
       };
     }
 
+    const serviceId = uuid.v4();
     const newItem = {
       TableName: 'Services',
       Item: {
-        ServiceID: new Date().toISOString(),
+        ServiceID: serviceId,
         name: body.name,
         price: body.price,
         createdAt: new Date().toISOString(),
