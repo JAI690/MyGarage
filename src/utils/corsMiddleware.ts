@@ -5,6 +5,19 @@ export const corsMiddleware = (
   handler: (event: APIGatewayProxyEvent, context: CustomContext) => Promise<APIGatewayProxyResult>
 ) => {
   return async (event: APIGatewayProxyEvent, context: CustomContext): Promise<APIGatewayProxyResult> => {
+    // Manejar solicitudes OPTIONS
+    if (event.httpMethod === 'OPTIONS') {
+      return {
+        statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,PUT,DELETE',
+          'Access-Control-Allow-Headers': 'Content-Type,Access-Control-Allow-Origin',
+        },
+        body: '',
+      };
+    }
+
     // Ejecutar el controlador original
     const response = await handler(event, context);
 
@@ -15,7 +28,7 @@ export const corsMiddleware = (
         ...response.headers,
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,PUT,DELETE',
-        'Access-Control-Allow-Headers': 'Content-Type,Authorization',
+        'Access-Control-Allow-Headers': 'Content-Type,Access-Control-Allow-Origin',
       },
     };
   };
