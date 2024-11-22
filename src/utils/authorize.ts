@@ -21,7 +21,7 @@ export const authorize = (allowedRoles: string[]) => {
         const token = authHeader.replace('Bearer ', '');
         const decoded = jwt.verify(token, SECRET_KEY) as JwtPayload;
 
-        if (!allowedRoles.includes(decoded.role)) {
+        if (!allowedRoles.includes(decoded.Role)) {
           return {
             statusCode: 403,
             body: JSON.stringify({ message: 'User not authorized' }),
@@ -30,8 +30,8 @@ export const authorize = (allowedRoles: string[]) => {
 
         context.authorizer = {
           user: {
-            userId: decoded.userId,
-            role: decoded.role,
+            userId: decoded.UserId,
+            role: decoded.Role,
           },
         };
 
