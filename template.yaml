@@ -218,57 +218,57 @@ Resources:
             Path: /orders
             Method: POST
 
-# Lambda Function: Assign Mechanic
-AssignMechanicFunction:
-  Type: AWS::Serverless::Function
-  Properties:
-    Handler: orders/assignMechanic.handler
-    Runtime: nodejs20.x
-    CodeUri: dist/
-    Description: Assign a mechanic to a work order
-    MemorySize: 128
-    Timeout: 5
-    Policies:
-      - AWSLambdaBasicExecutionRole
-      - Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Action:
-              - dynamodb:UpdateItem
-            Resource: arn:aws:dynamodb:us-east-1:637423663433:table/WorkOrders
-    Events:
-      PostApi:
-        Type: Api
-        Properties:
-          RestApiId: !Ref AutoGarageApi
-          Path: /orders/assignMechanic
-          Method: POST
+  # Lambda Function: Assign Mechanic
+  AssignMechanicFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: orders/assignMechanic.handler
+      Runtime: nodejs20.x
+      CodeUri: dist/
+      Description: Assign a mechanic to a work order
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:UpdateItem
+              Resource: arn:aws:dynamodb:us-east-1:637423663433:table/WorkOrders
+      Events:
+        PostApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /orders/assignMechanic
+            Method: POST
 
-# Lambda Function: Update Order Status
-UpdateOrderStatusFunction:
-  Type: AWS::Serverless::Function
-  Properties:
-    Handler: orders/updateStatus.handler
-    Runtime: nodejs20.x
-    CodeUri: dist/
-    Description: Update the status of a work order
-    MemorySize: 128
-    Timeout: 5
-    Policies:
-      - AWSLambdaBasicExecutionRole
-      - Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Action:
-              - dynamodb:UpdateItem
-            Resource: arn:aws:dynamodb:us-east-1:637423663433:table/WorkOrders
-    Events:
-      PutApi:
-        Type: Api
-        Properties:
-          RestApiId: !Ref AutoGarageApi
-          Path: /orders/status
-          Method: PUT
+  # Lambda Function: Update Order Status
+  UpdateOrderStatusFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: orders/updateStatus.handler
+      Runtime: nodejs20.x
+      CodeUri: dist/
+      Description: Update the status of a work order
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:UpdateItem
+              Resource: arn:aws:dynamodb:us-east-1:637423663433:table/WorkOrders
+      Events:
+        PutApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /orders/status
+            Method: PUT
 
 
   # Tabla Services
