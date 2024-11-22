@@ -341,7 +341,7 @@ UpdateOrderStatusFunction:
   WorkOrdersTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: WorkOrder
+      TableName: WorkOrders
       AttributeDefinitions:
         - AttributeName: OrderID
           AttributeType: S
