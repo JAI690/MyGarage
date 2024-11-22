@@ -60,6 +60,9 @@ Resources:
             RestApiId: !Ref AutoGarageApi
             Path: /services
             Method: POST
+      Environment:
+        Variables:
+          JWT_SECRET: your-secret-key
 
   # Lambda Function: Create User
   CreateUserFunction:
@@ -123,7 +126,7 @@ Resources:
             Method: POST
       Environment:
         Variables:
-          JWT_SECRET: your
+          JWT_SECRET: your-secret-key
 
   # Tabla Services
   ServicesTable:
