@@ -14,10 +14,19 @@ export const handler = authorize(['Cliente'])(async (
     const data = JSON.parse(event.body || '{}');
 
     // Validar campos requeridos
-    if (!data.userId || !data.make || !data.model || !data.year || data.Km || data.color) {
+    if (!data.make || !data.model || !data.year || data.Km || data.color) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: 'Missing required fields: UserID, Make, Model, Year' }),
+        body: JSON.stringify({ message: 'Missing required fields: Make, Model, Year' }),
+      };
+    }
+
+    // Extraer userId del contexto
+    const userId = context.authorizer?.user.userId;
+    if (!userId) {
+      return {
+        statusCode: 403,
+        body: JSON.stringify({ message: 'User ID missing from authorization context' }),
       };
     }
 
@@ -29,7 +38,7 @@ export const handler = authorize(['Cliente'])(async (
       TableName: 'Vehicles',
       Item: {
         VehicleID: vehicleId,
-        UserID: data.userId,
+        UserID: userId,
         Make: data.make,
         Model: data.model,
         Year: data.year,
