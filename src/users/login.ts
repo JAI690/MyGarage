@@ -1,13 +1,14 @@
-import { APIGatewayProxyHandler } from 'aws-lambda';
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
+import type { CustomContext } from '../types/CustomContext';
 import {corsMiddleware}  from '../utils/corsMiddleware';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
-export const handler: APIGatewayProxyHandler = async (event) => {
+export const handler = async (event: APIGatewayProxyEvent, context: CustomContext): Promise<APIGatewayProxyResult> => {
   try {
     const data = JSON.parse(event.body || '{}');
 
