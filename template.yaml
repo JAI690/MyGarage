@@ -22,10 +22,12 @@ Resources:
     Properties:
       Handler: services/get.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist/
+      CodeUri: ./src/
       Description: Get a list of services
       MemorySize: 128
       Timeout: 5
+      Layers:
+        - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -48,10 +50,12 @@ Resources:
     Properties:
       Handler: services/create.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist/
+      CodeUri: ./src/
       Description: Create a new service
       MemorySize: 128
       Timeout: 5
+      Layers:
+        - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
       Policies:
       - AWSLambdaBasicExecutionRole
       - Version: '2012-10-17'
@@ -78,10 +82,12 @@ Resources:
     Properties:
       Handler: users/create.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist/
+      CodeUri: ./src/
       Description: Create a new user
       MemorySize: 128
       Timeout: 5
+      Layers:
+        - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -109,10 +115,12 @@ Resources:
     Properties:
       Handler: users/login.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist/
+      CodeUri: ./src/
       Description: Login as a user
       MemorySize: 128
       Timeout: 5
+      Layers:
+        - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -139,10 +147,12 @@ Resources:
     Properties:
       Handler: vehicles/create.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: dist/
+      CodeUri: src/
       Description: Create a new vehicle associated with a user
       MemorySize: 128
       Timeout: 5
+      Layers:
+        - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -168,10 +178,12 @@ Resources:
     Properties:
       Handler: vehicles/getByUser.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: dist/
+      CodeUri: src/
       Description: Get all vehicles associated with a user
       MemorySize: 128
       Timeout: 5
+      Layers:
+        - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -194,10 +206,12 @@ Resources:
     Properties:
       Handler: orders/create.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: dist/
+      CodeUri: src/
       Description: Create a new work order for a vehicle
       MemorySize: 128
       Timeout: 5
+      Layers:
+        - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -231,10 +245,12 @@ Resources:
     Properties:
       Handler: orders/assignMechanic.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: dist/
+      CodeUri: src/
       Description: Assign a mechanic to a work order
       MemorySize: 128
       Timeout: 5
+      Layers:
+        - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -257,10 +273,12 @@ Resources:
     Properties:
       Handler: orders/updateStatus.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: dist/
+      CodeUri: src/
       Description: Update the status of a work order
       MemorySize: 128
       Timeout: 5
+      Layers:
+        - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -283,10 +301,12 @@ Resources:
     Properties:
       Handler: orders/getByUser.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist/
+      CodeUri: ./src/
       Description: Get all orders for a specific client
       MemorySize: 128
       Timeout: 5
+      Layers:
+        - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -309,10 +329,12 @@ Resources:
     Properties:
       Handler: orders/getAllNotClosed.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist/
+      CodeUri: ./src/
       Description: Get all orders that are not closed
       MemorySize: 128
       Timeout: 5
+      Layers:
+        - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
       Policies:
         - DynamoDBReadPolicy:
             TableName: !Ref WorkOrdersTable
