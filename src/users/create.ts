@@ -47,7 +47,7 @@ export const handler = async (
       Item: {
         UserID: userId,
         Email: email,
-        Password: password: hashedPassword, // Almacena la contraseña hasheada
+        Password: hashedPassword, // Almacena la contraseña hasheada
         Role: role,
         createdAt: new Date().toISOString(),
       },
