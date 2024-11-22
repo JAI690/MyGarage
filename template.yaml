@@ -91,8 +91,6 @@ Resources:
                 - dynamodb:Query
                 - dynamodb:GetItem
               Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Users/index/EmailIndex
-        - Version: '2012-10-17'
-          Statement:
             - Effect: Allow
               Action:
                 - dynamodb:PutItem
@@ -212,7 +210,6 @@ Resources:
               Resource:
                 - arn:aws:dynamodb:us-east-1:637423663433:table/Vehicles
                 - arn:aws:dynamodb:us-east-1:637423663433:table/WorkOrders
-          Statement:
             - Effect: Allow
               Action:
                 - dynamodb:BatchGetItem
@@ -280,6 +277,7 @@ Resources:
             Path: /orders/status
             Method: PUT
 
+  # Lambda Function: Get Client Orders
   GetClientOrdersFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -304,6 +302,25 @@ Resources:
           Properties:
             RestApiId: !Ref AutoGarageApi
             Path: /orders
+            Method: GET
+  
+  GetOpenWorkOrdersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: orders/getAllNotClosed.endpointHandler
+      Runtime: nodejs20.x
+      CodeUri: ./dist/
+      Description: Get all orders that are not closed
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref WorkOrdersTable
+      Events:
+        GetOpenWorkOrdersApi:
+          Type: Api
+          Properties:
+            Path: /orders/open
             Method: GET
 
 
