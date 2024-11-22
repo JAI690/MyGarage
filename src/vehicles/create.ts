@@ -14,7 +14,7 @@ export const handler = authorize(['Cliente'])(async (
     const data = JSON.parse(event.body || '{}');
 
     // Validar campos requeridos
-    if (!data.make || !data.model || !data.year || data.Km || data.color) {
+    if (!data.make || !data.model || !data.year || !data.Km || !data.color) {
       return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Missing required fields: Make, Model, Year' }),
