@@ -48,10 +48,11 @@ export const handler = authorize(['Admin', 'Mechanic'])(async (
       body: JSON.stringify({ message: 'Order status updated successfully', order: result.Attributes }),
     };
   } catch (error) {
+    const typedError = error as Error;
     console.error('Error updating order status:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Failed to update order status', error: error.message }),
+      body: JSON.stringify({ message: 'Failed to update order status', error: typedError.message }),
     };
   }
 });

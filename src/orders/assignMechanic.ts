@@ -40,10 +40,11 @@ export const handler = authorize(['Admin'])(async (
       body: JSON.stringify({ message: 'Mechanic assigned successfully', order: result.Attributes }),
     };
   } catch (error) {
+    const typedError = error as Error;
     console.error('Error assigning mechanic:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Failed to assign mechanic', error: error.message }),
+      body: JSON.stringify({ message: 'Failed to assign mechanic', error: typedError.message }),
     };
   }
 });
