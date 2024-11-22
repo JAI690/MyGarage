@@ -14,7 +14,7 @@ export const handler =  authorize(['Admin'])(async (
   try {
     const body = JSON.parse(event.body || '{}');
 
-    if (!body.name || !body.price) {
+    if (!body.name || !body.price || !body.description || !body.duration) {
       return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Missing required fields: name, price' }),
@@ -28,6 +28,8 @@ export const handler =  authorize(['Admin'])(async (
         ServiceID: serviceId,
         name: body.name,
         price: body.price,
+        description: body.description,
+        duration: body.duration,
         createdAt: new Date().toISOString(),
       },
     };
