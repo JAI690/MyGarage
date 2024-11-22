@@ -303,7 +303,7 @@ Resources:
             RestApiId: !Ref AutoGarageApi
             Path: /orders
             Method: GET
-  
+
   GetOpenWorkOrdersFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -317,9 +317,10 @@ Resources:
         - DynamoDBReadPolicy:
             TableName: !Ref WorkOrdersTable
       Events:
-        GetOpenWorkOrdersApi:
+        GetApi:
           Type: Api
           Properties:
+            RestApiId: !Ref AutoGarageApi
             Path: /orders/open
             Method: GET
 
