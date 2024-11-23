@@ -342,31 +342,31 @@ Resources:
             Method: DELETE
   
   UpdateServiceFunction:
-  Type: AWS::Serverless::Function
-  Properties:
-    Handler: services/update.endpointHandler
-    Runtime: nodejs20.x
-    CodeUri: ./dist/
-    Description: Update an existing service
-    MemorySize: 128
-    Timeout: 5
-    Layers:
-      - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
-    Policies:
-      - AWSLambdaBasicExecutionRole
-      - Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Action:
-              - dynamodb:UpdateItem
-            Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Services
-    Events:
-      PutApi:
-        Type: Api
-        Properties:
-          RestApiId: !Ref AutoGarageApi
-          Path: /services/{id}
-          Method: PUT
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: services/update.endpointHandler
+      Runtime: nodejs20.x
+      CodeUri: ./dist/
+      Description: Update an existing service
+      MemorySize: 128
+      Timeout: 5
+      Layers:
+        - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:UpdateItem
+              Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Services
+      Events:
+        PutApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /services/{id}
+            Method: PUT
 
   # Tabla Services
   ServicesTable:
