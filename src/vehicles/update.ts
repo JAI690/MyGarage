@@ -7,39 +7,47 @@ import type { CustomContext } from '../common/types/CustomContext';
 const dynamoDb = new DynamoDB.DocumentClient();
 
 export const handler = authorize(['Cliente','Admin'])(async (
-  event: APIGatewayProxyEvent,
-  context: CustomContext
-): Promise<APIGatewayProxyResult> => {
+    event: APIGatewayProxyEvent,
+    context: CustomContext
+  ): Promise<APIGatewayProxyResult> => {
   try {
+    const { id } = event.pathParameters || {};
     const { brand, model, year, plates } = JSON.parse(event.body || '{}');
-    const userId = event.requestContext.authorizer?.principalId;
 
-    if (!brand || !model || !year || !plates) {
+    if (!id || !brand || !model || !year || !plates) {
       return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Todos los campos son obligatorios.' }),
       };
     }
 
-    const vehicleId = `${userId}-${Date.now()}`;
-    const newVehicle = { VehicleID: vehicleId, UserID: userId, brand, model, year, plates };
+    const updateExpression =
+      'SET brand = :brand, model = :model, year = :year, plates = :plates';
+    const expressionAttributeValues = {
+      ':brand': brand,
+      ':model': model,
+      ':year': year,
+      ':plates': plates,
+    };
 
     await dynamoDb
-      .put({
+      .update({
         TableName: 'Vehicles',
-        Item: newVehicle,
+        Key: { VehicleID: id },
+        UpdateExpression: updateExpression,
+        ExpressionAttributeValues: expressionAttributeValues,
       })
       .promise();
 
     return {
-      statusCode: 201,
-      body: JSON.stringify(newVehicle),
+      statusCode: 200,
+      body: JSON.stringify({ message: 'Vehículo actualizado correctamente.' }),
     };
   } catch (error) {
-    console.error('Error creating vehicle:', error);
+    console.error('Error updating vehicle:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Error al crear vehículo.' }),
+      body: JSON.stringify({ message: 'Error al actualizar vehículo.' }),
     };
   }
 });

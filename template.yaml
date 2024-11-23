@@ -188,6 +188,40 @@ Resources:
             Path: /vehicles
             Method: GET
 
+  UpdateVehicleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: vehicles/update.endpointHandler
+      Runtime: nodejs20.x
+      CodeUri: ./src
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: VehiclesTable
+      Events:
+        PutApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /vehicles/{id}
+            Method: PUT
+
+  DeleteVehicleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: vehicles/delete.endpointHandler
+      Runtime: nodejs20.x
+      CodeUri: ./src
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: VehiclesTable
+      Events:
+        DeleteApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /vehicles/{id}
+            Method: DELETE
+
   # Lambda Function: Create Work Order
   CreateWorkOrderFunction:
     Type: AWS::Serverless::Function

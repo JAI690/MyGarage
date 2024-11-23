@@ -7,30 +7,35 @@ import type { CustomContext } from '../common/types/CustomContext';
 const dynamoDb = new DynamoDB.DocumentClient();
 
 export const handler = authorize(['Cliente','Admin'])(async (
-  event: APIGatewayProxyEvent,
-  context: CustomContext
-): Promise<APIGatewayProxyResult> => {
+    event: APIGatewayProxyEvent,
+    context: CustomContext
+  ): Promise<APIGatewayProxyResult> => {
   try {
-    const userId = event.requestContext.authorizer?.principalId;
+    const { id } = event.pathParameters || {};
 
-    const result = await dynamoDb
-      .query({
+    if (!id) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'El ID del vehículo es obligatorio.' }),
+      };
+    }
+
+    await dynamoDb
+      .delete({
         TableName: 'Vehicles',
-        IndexName: 'UserIndex',
-        KeyConditionExpression: 'UserID = :userId',
-        ExpressionAttributeValues: { ':userId': userId },
+        Key: { VehicleID: id },
       })
       .promise();
 
     return {
       statusCode: 200,
-      body: JSON.stringify(result.Items),
+      body: JSON.stringify({ message: 'Vehículo eliminado correctamente.' }),
     };
   } catch (error) {
-    console.error('Error fetching vehicles:', error);
+    console.error('Error deleting vehicle:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Error al obtener vehículos.' }),
+      body: JSON.stringify({ message: 'Error al eliminar vehículo.' }),
     };
   }
 });
