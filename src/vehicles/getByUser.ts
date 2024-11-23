@@ -11,7 +11,7 @@ export const handler = authorize(['Cliente','Admin'])(async (
   context: CustomContext
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const userId = event.requestContext.authorizer?.principalId;
+    const userId = context.authorizer?.user.userId;
 
     const result = await dynamoDb
       .query({

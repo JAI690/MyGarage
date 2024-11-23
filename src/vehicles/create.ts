@@ -3,6 +3,7 @@ import { DynamoDB } from 'aws-sdk';
 import { authorize } from '../common/utils/authorize';
 import { corsMiddleware } from '../common/utils/corsMiddleware';
 import type { CustomContext } from '../common/types/CustomContext';
+import * as uuid from 'uuid';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
@@ -12,7 +13,7 @@ export const handler = authorize(['Cliente','Admin'])(async (
 ): Promise<APIGatewayProxyResult> => {
   try {
     const { brand, model, year, plates } = JSON.parse(event.body || '{}');
-    const userId = event.requestContext.authorizer?.principalId;
+    const userId = context.authorizer?.user.userId;
 
     if (!brand || !model || !year || !plates) {
       return {
@@ -21,7 +22,7 @@ export const handler = authorize(['Cliente','Admin'])(async (
       };
     }
 
-    const vehicleId = `${userId}-${Date.now()}`;
+    const vehicleId = uuid.v4();
     const newVehicle = { VehicleID: vehicleId, UserID: userId, brand, model, year, plates };
 
     await dynamoDb
