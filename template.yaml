@@ -479,6 +479,60 @@ Resources:
             RestApiId: !Ref AutoGarageApi
             Path: /orders/byMechanic
             Method: GET
+  GetUsersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: users/get.endpointHandler
+      Runtime: nodejs20.x
+      CodeUri: ./dist
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBReadPolicy:
+            TableName: UsersTable
+      Events:
+        GetApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /users
+            Method: GET
+
+  UpdateUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: users/update.endpointHandler
+      Runtime: nodejs20.x
+      CodeUri: ./dist
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBUpdateItemPolicy:
+            TableName: UsersTable
+      Events:
+        PutApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /users/{id}
+            Method: PUT
+  
+  DeleteUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: users/delete.endpointHandler
+      Runtime: nodejs20.x
+      CodeUri: ./dist
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBDeleteItemPolicy:
+            TableName: UsersTable
+      Events:
+        DeleteApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /users/{id}
+            Method: DELETE
+
 
   # Tabla Services
   ServicesTable:
