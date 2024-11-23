@@ -367,6 +367,7 @@ Resources:
               - dynamodb:Scan
               - dynamodb:BatchGetItem
             Resource:
+              - arn:aws:dynamodb:us-east-1:637423663433:table/WorkOrders
               - arn:aws:dynamodb:us-east-1:637423663433:table/Vehicles
               - arn:aws:dynamodb:us-east-1:637423663433:table/Services
       Events:
