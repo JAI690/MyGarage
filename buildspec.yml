@@ -15,7 +15,7 @@ phases:
       - echo Copying node_modules to dist...
       - cp -R node_modules dist/
       - echo Packaging the SAM application...
-      - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml
+      - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml --force-upload
 artifacts:
   files:
     - packaged.yaml # Archivo generado por SAM
