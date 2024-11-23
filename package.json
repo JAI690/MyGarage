@@ -3,6 +3,10 @@
     "version": "1.0.0",
     "main": "index.js",
     "dependencies": {
+        "typescript": "^4.0.0",
+        "aws-sdk": "^2.1692.0",
+        "bcryptjs": "^2.4.3",
+        "jsonwebtoken": "^9.0.2"
     },
     "scripts": {
         "build": "tsc",
