@@ -20,7 +20,7 @@ export const handler = authorize(['Admin'])(async (
         '#role': 'Role', // Alias para evitar conflicto con palabra reservada
       },
       ExpressionAttributeValues: {
-        ':role': 'Mechanic',
+        ':role': 'Mecanico',
       },
     };
 
