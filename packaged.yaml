@@ -5,6 +5,7 @@ Description: 'auto-garage-backend
   Sample SAM Template for auto-garage-backend
 
   '
+  
 Globals:
   Function:
     Timeout: 3
