@@ -12,6 +12,7 @@ phases:
     commands:
       - echo Compiling TypeScript to JavaScript...
       - tsc # Compila los archivos de TypeScript
+      - ls
       - echo Copying node_modules to dist...
       - rm -r node_modules/typescript/
       - cp -R node_modules dist/
