@@ -2,11 +2,15 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import { authorize } from '../common/utils/authorize';
 import { corsMiddleware } from '../common/utils/corsMiddleware';
+import type { CustomContext } from '../common/types/CustomContext';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
-export const handler = authorize(['Admin'])(async (): Promise<APIGatewayProxyResult> => {
-  try {
+export const handler = authorize(['Admin'])(async (
+    event: APIGatewayProxyEvent,
+    context: CustomContext
+  ): Promise<APIGatewayProxyResult> => {
+    try {
     const params = {
       TableName: 'Users',
     };

@@ -479,6 +479,7 @@ Resources:
             RestApiId: !Ref AutoGarageApi
             Path: /orders/byMechanic
             Method: GET
+            
   GetUsersFunction:
     Type: AWS::Serverless::Function
     Properties:
