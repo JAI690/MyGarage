@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { DynamoDB } from '@aws-sdk/client-dynamodb';
+import { DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs'; // Importa bcryptjs para hashear contraseñas
 import { isValidEmail } from '../common/utils/extras';
