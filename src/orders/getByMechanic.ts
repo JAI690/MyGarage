@@ -6,7 +6,7 @@ import type { CustomContext } from '../common/types/CustomContext';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
-export const handler = authorize(['Mechanic'])(async (
+export const handler = authorize(['Mecanico'])(async (
     event: APIGatewayProxyEvent,
     context: CustomContext
   ): Promise<APIGatewayProxyResult> => {
