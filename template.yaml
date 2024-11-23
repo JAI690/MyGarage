@@ -327,7 +327,7 @@ Resources:
   DeleteServiceFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: services/deleteService.endpointHandler
+      Handler: services/delete.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./dist/
       Policies:
