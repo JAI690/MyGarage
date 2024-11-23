@@ -12,8 +12,8 @@ phases:
     commands:
       - echo Compiling TypeScript to JavaScript...
       - tsc # Compila los archivos de TypeScript
-      - rm -r node_modules/typescript/
       - echo Copying node_modules to dist...
+      - rm -r node_modules/typescript/
       - cp -R node_modules dist/
       - echo Packaging the SAM application...
       - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml --force-upload
