@@ -504,35 +504,48 @@ Resources:
       Handler: users/update.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./dist
+      Description: Update a user
+      MemorySize: 128
+      Timeout: 5
       Policies:
         - AWSLambdaBasicExecutionRole
-        - DynamoDBUpdateItemPolicy:
-            TableName: UsersTable
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:UpdateItem
+              Resource: !GetAtt UsersTable.Arn
       Events:
         PutApi:
           Type: Api
           Properties:
-            RestApiId: !Ref AutoGarageApi
             Path: /users/{id}
             Method: PUT
-  
+
   DeleteUserFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: users/delete.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./dist
+      Description: Delete a user
+      MemorySize: 128
+      Timeout: 5
       Policies:
         - AWSLambdaBasicExecutionRole
-        - DynamoDBDeleteItemPolicy:
-            TableName: UsersTable
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:DeleteItem
+              Resource: !GetAtt UsersTable.Arn
       Events:
         DeleteApi:
           Type: Api
           Properties:
-            RestApiId: !Ref AutoGarageApi
             Path: /users/{id}
             Method: DELETE
+
 
 
   # Tabla Services
