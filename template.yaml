@@ -487,9 +487,14 @@ Resources:
       Runtime: nodejs20.x
       CodeUri: ./dist
       Policies:
-        - AWSLambdaBasicExecutionRole
-        - DynamoDBReadPolicy:
-            TableName: UsersTable
+      - AWSLambdaBasicExecutionRole
+      - Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - dynamodb:Scan
+            Resource:
+              - arn:aws:dynamodb:us-east-1:637423663433:table/Users
       Events:
         GetApi:
           Type: Api
