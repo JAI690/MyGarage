@@ -36,4 +36,5 @@ export const handler = authorize(['Mechanic'])(async (
       };
     }
   });
-  
+
+export const endpointHandler = corsMiddleware(handler);
