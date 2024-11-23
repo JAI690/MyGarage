@@ -57,7 +57,7 @@ export const handler = authorize(['Cliente'])(async (
     const params = {
       TableName: 'WorkOrders',
       Item: {
-        WorkOrderID: orderId,
+        OrderID: orderId,
         ClientID: userId,
         VehicleID: data.vehicleId,
         Services: serviceIds,
