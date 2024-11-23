@@ -466,8 +466,12 @@ Resources:
             - Effect: Allow
               Action:
                 - dynamodb:Query
+                - dynamodb:BatchGetItem
               Resource:
+                - arn:aws:dynamodb:us-east-1:637423663433:table/WorkOrders
                 - arn:aws:dynamodb:us-east-1:637423663433:table/WorkOrders/index/AssignedToIndex
+                - arn:aws:dynamodb:us-east-1:637423663433:table/Vehicles
+                - arn:aws:dynamodb:us-east-1:637423663433:table/Services
       Events:
         GetApi:
           Type: Api
