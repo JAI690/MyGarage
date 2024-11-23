@@ -17,6 +17,9 @@ phases:
       - rm -r node_modules/typescript/
       - cp -R node_modules dist/
       - echo Packaging the SAM application...
+      - cd dist
+      - ls
+      - cd ..
       - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml --force-upload
 artifacts:
   files:
