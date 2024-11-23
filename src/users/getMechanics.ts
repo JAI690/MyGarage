@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent, Context, APIGatewayProxyResult } from 'aws-lambda';
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import { authorize } from '../common/utils/authorize';
 import { corsMiddleware } from '../common/utils/corsMiddleware';
@@ -11,13 +11,24 @@ export const handler = authorize(['Admin'])(async (
   context: CustomContext
 ): Promise<APIGatewayProxyResult> => {
   try {
-    // Query to filter users by role = "Mechanic"
+    const role = event.queryStringParameters?.role;
+
+    if (!role) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'The role query parameter is required.' }),
+      };
+    }
+
     const params = {
       TableName: 'Users',
       IndexName: 'RoleIndex',
-      KeyConditionExpression: 'Role = :role',
+      KeyConditionExpression: '#role = :role',
+      ExpressionAttributeNames: {
+        '#role': 'Role', // Alias para la palabra reservada
+      },
       ExpressionAttributeValues: {
-        ':role': 'Mechanic',
+        ':role': role,
       },
     };
 
@@ -26,18 +37,15 @@ export const handler = authorize(['Admin'])(async (
     return {
       statusCode: 200,
       body: JSON.stringify({
-        message: 'Mechanics retrieved successfully',
-        users: result.Items?.map((user) => ({
-          MechanicID: user.UserID,
-          Name: user.Name,
-        })) || [],
+        message: 'Users retrieved successfully',
+        users: result.Items,
       }),
     };
   } catch (error) {
-    console.error('Error retrieving mechanics:', error);
+    console.error('Error fetching users:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: 'Failed to retrieve mechanics', error: (error as Error).message }),
+      body: JSON.stringify({ message: 'Failed to fetch users', error: (error as Error).message }),
     };
   }
 });
