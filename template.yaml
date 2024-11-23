@@ -437,7 +437,7 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref AutoGarageApi
-            Path: /users?{role}
+            Path: /users/mechanics
             Method: GET
 
   # Endpoint: Get Orders by Mechanic
