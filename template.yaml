@@ -412,6 +412,63 @@ Resources:
             RestApiId: !Ref AutoGarageApi
             Path: /services/{id}
             Method: PUT
+  
+  # Endpoint: Get Mechanics
+  GetMechanicsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: users/getMechanics.endpointHandler
+      Runtime: nodejs20.x
+      CodeUri: ./dist
+      Description: Get all mechanics
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+              Resource:
+                - arn:aws:dynamodb:us-east-1:637423663433:table/Users/index/RoleIndex
+      Events:
+        GetApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /users
+            Method: GET
+            RequestParameters:
+              querystrings:
+                role: true
+
+  # Endpoint: Get Orders by Mechanic
+  GetOrdersByMechanicFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: orders/getByMechanic.endpointHandler
+      Runtime: nodejs20.x
+      CodeUri: ./dist
+      Description: Get orders assigned to a mechanic
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+              Resource:
+                - arn:aws:dynamodb:us-east-1:637423663433:table/WorkOrders/index/AssignedToIndex
+      Events:
+        GetApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /orders/byMechanic
+            Method: GET
 
   # Tabla Services
   ServicesTable:
@@ -487,28 +544,19 @@ Resources:
       AttributeDefinitions:
         - AttributeName: OrderID
           AttributeType: S
-        - AttributeName: ClientID
-          AttributeType: S
-        - AttributeName: VehicleID
+        - AttributeName: AssignedTo
           AttributeType: S
       KeySchema:
         - AttributeName: OrderID
           KeyType: HASH
       GlobalSecondaryIndexes:
-        - IndexName: ClientIndex
+        - IndexName: AssignedToIndex
           KeySchema:
-            - AttributeName: ClientID
-              KeyType: HASH
-          Projection:
-            ProjectionType: ALL
-        - IndexName: VehicleIndex
-          KeySchema:
-            - AttributeName: VehicleID
+            - AttributeName: AssignedTo
               KeyType: HASH
           Projection:
             ProjectionType: ALL
       BillingMode: PAY_PER_REQUEST
-
 
   # Tabla Invoices
   InvoicesTable:
@@ -542,13 +590,15 @@ Resources:
           AttributeType: S
         - AttributeName: Email
           AttributeType: S
+        - AttributeName: Role
+          AttributeType: S
       KeySchema:
         - AttributeName: UserID
           KeyType: HASH
       GlobalSecondaryIndexes:
-        - IndexName: EmailIndex
+        - IndexName: RoleIndex
           KeySchema:
-            - AttributeName: Email
+            - AttributeName: Role
               KeyType: HASH
           Projection:
             ProjectionType: ALL
