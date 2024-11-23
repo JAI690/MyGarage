@@ -585,17 +585,19 @@ Resources:
       AttributeDefinitions:
         - AttributeName: UserID
           AttributeType: S
-        - AttributeName: Email
-          AttributeType: S
         - AttributeName: Role
           AttributeType: S
+        - AttributeName: Email
+          AttributeType: S
       KeySchema:
-        - AttributeName: UserID
+        - AttributeName: Role
           KeyType: HASH
+        - AttributeName: UserID
+          KeyType: RANGE
       GlobalSecondaryIndexes:
-        - IndexName: RoleIndex
+        - IndexName: EmailIndex
           KeySchema:
-            - AttributeName: Role
+            - AttributeName: Email
               KeyType: HASH
           Projection:
             ProjectionType: ALL
