@@ -201,7 +201,7 @@ Resources:
             - Effect: Allow
               Action:
                 - dynamodb:UpdateItem
-              Resource: arn:aws:dynamodb:us-east-1:637423663433:table/VehiclesTable
+              Resource: arn:aws:dynamodb:us-east-1:637423663433:table/Vehicles
       Events:
         PutApi:
           Type: Api
