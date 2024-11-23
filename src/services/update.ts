@@ -36,10 +36,10 @@ export const handler = authorize(['Admin'])(async (
       UpdateExpression:
         'SET #name = :name, #description = :description, #price = :price, #duration = :duration',
       ExpressionAttributeNames: {
-        '#name': 'Name',
-        '#description': 'Description',
-        '#price': 'Price',
-        '#duration': 'Duration',
+        '#name': 'name',
+        '#description': 'description',
+        '#price': 'price',
+        '#duration': 'duration',
       },
       ExpressionAttributeValues: {
         ':name': name,
