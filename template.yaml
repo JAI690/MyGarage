@@ -195,8 +195,13 @@ Resources:
       Runtime: nodejs20.x
       CodeUri: ./dist/
       Policies:
-        - DynamoDBCrudPolicy:
-            TableName: VehiclesTable
+        - AWSLambdaBasicExecutionRole
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:UpdateItem
+              Resource: arn:aws:dynamodb:us-east-1:637423663433:table/VehiclesTable
       Events:
         PutApi:
           Type: Api
