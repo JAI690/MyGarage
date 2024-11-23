@@ -7,19 +7,13 @@ phases:
     commands:
       - echo Installing dependencies...
       - npm install
-      - npm install -g typescript
   build:
     commands:
       - echo Compiling TypeScript to JavaScript...
-      - tsc # Compila los archivos de TypeScript
-      - ls
+      - npx tsc --outDir dist # Compila los archivos de TypeScript
       - echo Copying node_modules to dist...
-      - rm -r node_modules/typescript/
       - cp -R node_modules dist/
       - echo Packaging the SAM application...
-      - cd dist
-      - ls
-      - cd ..
       - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml
 artifacts:
   files:
