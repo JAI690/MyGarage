@@ -543,6 +543,8 @@ Resources:
           AttributeType: S
         - AttributeName: AssignedTo
           AttributeType: S
+        - AttributeName: ClientID # Definimos ClientID como nuevo atributo
+          AttributeType: S
       KeySchema:
         - AttributeName: OrderID
           KeyType: HASH
@@ -550,6 +552,12 @@ Resources:
         - IndexName: AssignedToIndex
           KeySchema:
             - AttributeName: AssignedTo
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+        - IndexName: ClientIndex # Nuevo índice global secundario
+          KeySchema:
+            - AttributeName: ClientID
               KeyType: HASH
           Projection:
             ProjectionType: ALL
