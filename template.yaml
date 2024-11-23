@@ -359,8 +359,16 @@ Resources:
       MemorySize: 128
       Timeout: 5
       Policies:
-        - DynamoDBReadPolicy:
-            TableName: !Ref WorkOrdersTable
+      - AWSLambdaBasicExecutionRole
+      - Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - dynamodb:Scan
+              - dynamodb:BatchGetItem
+            Resource:
+              - arn:aws:dynamodb:us-east-1:637423663433:table/Vehicles
+              - arn:aws:dynamodb:us-east-1:637423663433:table/Services
       Events:
         GetApi:
           Type: Api
