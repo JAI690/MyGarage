@@ -193,7 +193,7 @@ Resources:
     Properties:
       Handler: vehicles/update.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./src
+      CodeUri: ./dist/
       Policies:
         - DynamoDBCrudPolicy:
             TableName: VehiclesTable
@@ -210,7 +210,7 @@ Resources:
     Properties:
       Handler: vehicles/delete.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./src
+      CodeUri: ./dist/
       Policies:
         - DynamoDBCrudPolicy:
             TableName: VehiclesTable
