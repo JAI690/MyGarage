@@ -6,7 +6,7 @@ phases:
       nodejs: 20 # Usa la versión que prefieras de Node.js
     commands:
       - echo Installing dependencies...
-      - npm install
+      - npm install --production
       - npm install -g typescript
   build:
     commands:

@@ -23,6 +23,13 @@ Resources:
       Handler: services/get.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./src/services
+      Exclude:
+        - "*.test.ts"
+        - "*.spec.ts"
+        - "docs/**/*"
+        - "node_modules/**/README.md"
+        - "node_modules/**/test/**/*"
+        - ".git/**/*"
       Description: Get a list of services
       MemorySize: 128
       Timeout: 5
@@ -51,6 +58,13 @@ Resources:
       Handler: services/create.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./src/services
+      Exclude:
+        - "*.test.ts"
+        - "*.spec.ts"
+        - "docs/**/*"
+        - "node_modules/**/README.md"
+        - "node_modules/**/test/**/*"
+        - ".git/**/*"
       Description: Create a new service
       MemorySize: 128
       Timeout: 5
@@ -83,6 +97,13 @@ Resources:
       Handler: users/create.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./src/users
+      Exclude:
+        - "*.test.ts"
+        - "*.spec.ts"
+        - "docs/**/*"
+        - "node_modules/**/README.md"
+        - "node_modules/**/test/**/*"
+        - ".git/**/*"
       Description: Create a new user
       MemorySize: 128
       Timeout: 5
@@ -116,6 +137,13 @@ Resources:
       Handler: users/login.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./src/users
+      Exclude:
+        - "*.test.ts"
+        - "*.spec.ts"
+        - "docs/**/*"
+        - "node_modules/**/README.md"
+        - "node_modules/**/test/**/*"
+        - ".git/**/*"
       Description: Login as a user
       MemorySize: 128
       Timeout: 5
@@ -148,6 +176,13 @@ Resources:
       Handler: vehicles/create.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./src/vehicles
+      Exclude:
+        - "*.test.ts"
+        - "*.spec.ts"
+        - "docs/**/*"
+        - "node_modules/**/README.md"
+        - "node_modules/**/test/**/*"
+        - ".git/**/*"
       Description: Create a new vehicle associated with a user
       MemorySize: 128
       Timeout: 5
@@ -179,6 +214,13 @@ Resources:
       Handler: vehicles/getByUser.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./src/vehicles
+      Exclude:
+        - "*.test.ts"
+        - "*.spec.ts"
+        - "docs/**/*"
+        - "node_modules/**/README.md"
+        - "node_modules/**/test/**/*"
+        - ".git/**/*"
       Description: Get all vehicles associated with a user
       MemorySize: 128
       Timeout: 5
@@ -207,6 +249,13 @@ Resources:
       Handler: orders/create.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./src/orders
+      Exclude:
+        - "*.test.ts"
+        - "*.spec.ts"
+        - "docs/**/*"
+        - "node_modules/**/README.md"
+        - "node_modules/**/test/**/*"
+        - ".git/**/*"
       Description: Create a new work order for a vehicle
       MemorySize: 128
       Timeout: 5
@@ -246,6 +295,13 @@ Resources:
       Handler: orders/assignMechanic.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./src/orders
+      Exclude:
+        - "*.test.ts"
+        - "*.spec.ts"
+        - "docs/**/*"
+        - "node_modules/**/README.md"
+        - "node_modules/**/test/**/*"
+        - ".git/**/*"
       Description: Assign a mechanic to a work order
       MemorySize: 128
       Timeout: 5
@@ -274,6 +330,13 @@ Resources:
       Handler: orders/updateStatus.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./src/orders
+      Exclude:
+        - "*.test.ts"
+        - "*.spec.ts"
+        - "docs/**/*"
+        - "node_modules/**/README.md"
+        - "node_modules/**/test/**/*"
+        - ".git/**/*"
       Description: Update the status of a work order
       MemorySize: 128
       Timeout: 5
@@ -302,6 +365,13 @@ Resources:
       Handler: orders/getByUser.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./src/orders
+      Exclude:
+        - "*.test.ts"
+        - "*.spec.ts"
+        - "docs/**/*"
+        - "node_modules/**/README.md"
+        - "node_modules/**/test/**/*"
+        - ".git/**/*"
       Description: Get all orders for a specific client
       MemorySize: 128
       Timeout: 5
@@ -330,6 +400,13 @@ Resources:
       Handler: orders/getAllNotClosed.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./src/orders
+      Exclude:
+        - "*.test.ts"
+        - "*.spec.ts"
+        - "docs/**/*"
+        - "node_modules/**/README.md"
+        - "node_modules/**/test/**/*"
+        - ".git/**/*"
       Description: Get all orders that are not closed
       MemorySize: 128
       Timeout: 5
@@ -352,6 +429,13 @@ Resources:
       Handler: services/deleteService.endpointHandler
       Runtime: nodejs20.x
       CodeUri: ./src/services
+      Exclude:
+        - "*.test.ts"
+        - "*.spec.ts"
+        - "docs/**/*"
+        - "node_modules/**/README.md"
+        - "node_modules/**/test/**/*"
+        - ".git/**/*"
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref ServicesTable
