@@ -20,7 +20,7 @@ phases:
       - cd dist
       - ls
       - cd ..
-      - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml --force-upload
+      - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml
 artifacts:
   files:
     - packaged.yaml # Archivo generado por SAM
