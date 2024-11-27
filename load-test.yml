@@ -1,0 +1,114 @@
+config:
+  target: 'https://7ltt3e9e4g.execute-api.us-east-1.amazonaws.com/Dev'
+  phases:
+    - duration: 60
+      arrivalRate: 10
+    - duration: 30
+      arrivalRate: 50
+    - duration: 60
+      arrivalRate: 20
+  defaults:
+    headers:
+      Content-Type: 'application/json'
+
+scenarios:
+  - name: Login and Fetch Orders
+    flow:
+      - post:
+          url: '/login'
+          json:
+            email: 'admin@hotmail.com'
+            password: 'Test'
+          capture:
+            - json: '$.token'
+              as: authToken
+      - get:
+          url: '/orders'
+          headers:
+            Authorization: 'Bearer {{ authToken }}'
+
+  - name: Create and Assign Order
+    flow:
+      - post:
+          url: '/login'
+          json:
+            email: 'admin@hotmail.com'
+            password: 'Test'
+          capture:
+            - json: '$.token'
+              as: authToken
+      - post:
+          url: '/orders'
+          headers:
+            Authorization: 'Bearer {{ authToken }}'
+          json:
+            vehicleId: 'f69faca6-45e3-4ba2-88dc-3abfd3ac2282'
+            services: ['32e25a3f-bf6d-487d-bafe-2298e55469dd']
+      - post:
+          url: '/orders/assignMechanic'
+          headers:
+            Authorization: 'Bearer {{ authToken }}'
+          json:
+            orderId: '6227aeee-2ac9-47b6-b4e8-bfe2fdaad3b4'
+            mechanicId: 'mechanic123'
+
+  - name: Update Order Status
+    flow:
+      - post:
+          url: '/login'
+          json:
+            email: 'admin@hotmail.com'
+            password: 'Test'
+          capture:
+            - json: '$.token'
+              as: authToken
+      - put:
+          url: '/orders/status'
+          headers:
+            Authorization: 'Bearer {{ authToken }}'
+          json:
+            orderId: '6227aeee-2ac9-47b6-b4e8-bfe2fdaad3b4'
+            status: 'Completed'
+
+  - name: Fetch Users and Create User
+    flow:
+      - post:
+          url: '/login'
+          json:
+            email: 'admin@hotmail.com'
+            password: 'Test'
+          capture:
+            - json: '$.token'
+              as: authToken
+      - get:
+          url: '/users'
+          headers:
+            Authorization: 'Bearer {{ authToken }}'
+      - post:
+          url: '/users'
+          headers:
+            Authorization: 'Bearer {{ authToken }}'
+          json:
+            name: 'New User'
+            email: 'newuser@example.com'
+            password: 'Password123'
+            role: 'Cliente'
+
+  - name: Fetch Vehicles and Services
+    flow:
+      - post:
+          url: '/login'
+          json:
+            email: 'admin@hotmail.com'
+            password: 'Test'
+          capture:
+            - json: '$.token'
+              as: authToken
+      - get:
+          url: '/vehicles'
+          headers:
+            Authorization: 'Bearer {{ authToken }}'
+      - get:
+          url: '/services'
+          headers:
+            Authorization: 'Bearer {{ authToken }}'
