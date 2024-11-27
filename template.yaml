@@ -26,6 +26,7 @@ Resources:
       Description: Get a list of services
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -52,6 +53,7 @@ Resources:
       Description: Create a new service
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
       - AWSLambdaBasicExecutionRole
       - Version: '2012-10-17'
@@ -82,6 +84,7 @@ Resources:
       Description: Create a new user
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -113,6 +116,7 @@ Resources:
       Description: Login as a user
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -143,6 +147,7 @@ Resources:
       Description: Create a new vehicle associated with a user
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -172,6 +177,7 @@ Resources:
       Description: Get all vehicles associated with a user
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -237,6 +243,7 @@ Resources:
       Description: Create a new work order for a vehicle
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -274,6 +281,7 @@ Resources:
       Description: Assign a mechanic to a work order
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -300,6 +308,7 @@ Resources:
       Description: Update the status of a work order
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -326,6 +335,7 @@ Resources:
       Description: Get all orders for a specific client
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
       - AWSLambdaBasicExecutionRole
       - Version: '2012-10-17'
@@ -358,6 +368,7 @@ Resources:
       Description: Get all orders that are not closed
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
       - AWSLambdaBasicExecutionRole
       - Version: '2012-10-17'
@@ -404,6 +415,7 @@ Resources:
       Description: Update an existing service
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Layers:
         - arn:aws:lambda:us-east-1:637423663433:layer:auto-garage-layer:2
       Policies:
@@ -432,6 +444,7 @@ Resources:
       Description: Get all mechanics
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -459,6 +472,7 @@ Resources:
       Description: Get orders assigned to a mechanic
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -512,6 +526,7 @@ Resources:
       Description: Update a user
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -536,6 +551,7 @@ Resources:
       Description: Delete a user
       MemorySize: 128
       Timeout: 5
+      Tracing: Active
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
