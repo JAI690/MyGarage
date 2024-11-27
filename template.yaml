@@ -10,6 +10,7 @@ Resources:
     Type: AWS::Serverless::Api
     Properties:
       Name: auto-garage-api
+      Tracing: Active
       StageName: Dev
       Cors:
         AllowMethods: "'GET,POST,OPTIONS,PUT,DELETE'"
