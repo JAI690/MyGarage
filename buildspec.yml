@@ -3,20 +3,23 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 20 # Usa la versión que prefieras de Node.js
+      nodejs: 20
     commands:
       - echo Installing dependencies...
       - npm ci
-      - npm install -g typescript
+      - npm install -g typescript modclean
   build:
     commands:
       - echo Compiling TypeScript to JavaScript...
-      - npx tsc --outDir dist # Compila los archivos de TypeScript
-      - echo Copying node_modules to dist...
+      - npx tsc --outDir dist
+      - echo Cleaning unnecessary files from node_modules...
+      - modclean --run
+      - echo Pruning development dependencies...
+      - npm prune --production
       - cp -R node_modules dist/
       - echo Packaging the SAM application...
       - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml
 artifacts:
   files:
-    - packaged.yaml # Archivo generado por SAM
-    - dist/**/* # Archivos compilados de TypeScript
+    - packaged.yaml
+    - dist/**
