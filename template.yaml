@@ -568,6 +568,66 @@ Resources:
             Path: /users/{id}
             Method: DELETE
 
+  CreateProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: warehouse/create.handler
+      Runtime: nodejs20.x
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref WarehouseTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /warehouse
+            Method: POST
+
+  GetProductsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: warehouse/getAll.handler
+      Runtime: nodejs20.x
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref WarehouseTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /warehouse
+            Method: GET
+
+  UpdateProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: warehouse/update.handler
+      Runtime: nodejs20.x
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref WarehouseTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /warehouse/{id}
+            Method: PUT
+
+  DeleteProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: warehouse/delete.handler
+      Runtime: nodejs20.x
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref WarehouseTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /warehouse/{id}
+            Method: DELETE
+
 
 
   # Tabla Services
@@ -718,4 +778,16 @@ Resources:
               KeyType: HASH
           Projection:
             ProjectionType: ALL
+      BillingMode: PAY_PER_REQUEST
+  
+  WarehouseTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Warehouse
+      AttributeDefinitions:
+        - AttributeName: ProductID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: ProductID
+          KeyType: HASH
       BillingMode: PAY_PER_REQUEST
