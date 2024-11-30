@@ -7,7 +7,7 @@ import { v4 as uuid } from 'uuid';
 
 const dynamoDb = new DynamoDB.DocumentClient();
 
-export const handler = authorize(['Admin'])(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const handler = (async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
     const data = JSON.parse(event.body || '{}');
     const { name, email, password, role } = data;
