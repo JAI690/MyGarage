@@ -19,8 +19,8 @@ phases:
       - npm cache clean --force
   pre_build:
     commands:
-      - echo "Installing production dependencies..."
-      - lerna bootstrap --since-version-mode=fixed --ignore-scripts --no-ci --no-sort --no-symlink --only-updated --prefer-offline
+      - echo "Installing dependencies..."
+      - lerna run --since-version-mode=fixed --ignore-scripts --no-ci --no-sort --no-symlink --only-updated --prefer-offline install
   build:
     commands:
       - echo "Compiling TypeScript to JavaScript..."
