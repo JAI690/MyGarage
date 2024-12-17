@@ -648,6 +648,23 @@ Resources:
             RestApiId: !Ref AutoGarageApi
             Path: /warehouse/{id}
             Method: DELETE
+            
+  FetchProductsFunction:
+  Type: AWS::Serverless::Function
+  Properties:
+    Handler: src/products/fetchProducts.endpointHandler
+    Runtime: nodejs20.x
+    Policies:
+      - DynamoDBReadPolicy:
+          TableName: !Ref ProductsTable
+    Events:
+      FetchApi:
+        Type: Api
+        Properties:
+          RestApiId: !Ref AutoGarageApi
+          Path: /products
+          Method: GET
+
 
 
 
