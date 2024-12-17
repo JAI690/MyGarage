@@ -6,10 +6,13 @@ phases:
       nodejs: 20
     commands:
       - echo Installing dependencies...
-      - ulimit -n 65536  # Increase the file descriptor limit
+      - npm config set maxsockets 5  # Limit concurrent connections
+      - npm config set fetch-retries 5  # Increase retry attempts
+      - npm config set fetch-retry-mintimeout 20000  # Increase minimum retry timeout
+      - npm config set fetch-retry-maxtimeout 120000  # Increase maximum retry timeout
       - npm install -g npm@latest  # Update npm to the latest version
       - npm cache clean --force  # Clear npm cache
-      - npm ci --no-audit --no-fund  # Install dependencies with reduced output
+      - npm ci --no-audit --no-fund --prefer-offline  # Install dependencies with reduced network operations
       - npm install -g typescript modclean
   build:
     commands:
