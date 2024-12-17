@@ -20,17 +20,18 @@ phases:
   pre_build:
     commands:
       - echo "Installing dependencies..."
-      - lerna run --since-version-mode=fixed --ignore-scripts --no-ci --no-sort --no-symlink --only-updated --prefer-offline install
+      - npm install
   build:
     commands:
       - echo "Compiling TypeScript to JavaScript..."
-      - lerna run --parallel build
+      - npx swc src -d dist
       - echo "Pruning development dependencies..."
-      - lerna clean -y
+      - npm prune
       - echo "Packaging the SAM application..."
       - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml
 
 artifacts:
   files:
     - packaged.yaml
-    - packages/*/dist/**
+    - dist/**
+
