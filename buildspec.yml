@@ -11,22 +11,24 @@ phases:
     commands:
       - echo "Installing Lerna..."
       - npm install -g lerna
+      - echo "Installing Yarn..."
+      - npm install -g yarn
       - echo "Installing dependencies..."
-      - npm config set maxsockets 15
-      - npm config set fetch-retries 5
-      - npm config set fetch-retry-mintimeout 20000
-      - npm config set fetch-retry-maxtimeout 120000
-      - npm cache clean --force
+      - yarn config set maxsockets 15
+      - yarn config set fetch-retries 5
+      - yarn config set fetch-retry-mintimeout 20000
+      - yarn config set fetch-retry-maxtimeout 120000
+      - yarn cache clean
   pre_build:
     commands:
       - echo "Installing dependencies..."
-      - npm install
+      - yarn install
   build:
     commands:
       - echo "Compiling TypeScript to JavaScript..."
       - npx swc src -d dist
       - echo "Pruning development dependencies..."
-      - npm prune
+      - yarn run prune
       - echo "Packaging the SAM application..."
       - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml
 
@@ -34,4 +36,3 @@ artifacts:
   files:
     - packaged.yaml
     - dist/**
-
