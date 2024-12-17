@@ -550,8 +550,38 @@ Resources:
           Properties:
             Path: /users/{id}
             Method: DELETE
-
+  
   CreateProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/products/create.endpointHandler
+      Runtime: nodejs20.x
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ProductsTable
+      Events:
+        PostApi:
+          Type: Api
+          Properties:
+            Path: /products
+            Method: POST
+  
+  AssignProductLocationFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/warehouse/assignLocation.endpointHandler
+      Runtime: nodejs20.x
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref WarehouseTable
+      Events:
+        PostApi:
+          Type: Api
+          Properties:
+            Path: /warehouse
+            Method: POST
+
+  CreateProductWarehouseFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: warehouse/create.endpointHandler
@@ -763,14 +793,26 @@ Resources:
             ProjectionType: ALL
       BillingMode: PAY_PER_REQUEST
   
-  WarehouseTable:
+  ProductsTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: Warehouse
+      TableName: Products
       AttributeDefinitions:
         - AttributeName: ProductID
           AttributeType: S
       KeySchema:
         - AttributeName: ProductID
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+  
+  WarehouseTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Warehouse
+      AttributeDefinitions:
+        - AttributeName: WarehouseID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: WarehouseID
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
