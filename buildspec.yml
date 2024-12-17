@@ -9,28 +9,28 @@ phases:
     runtime-versions:
       nodejs: 20
     commands:
-      - echo Installing dependencies...
+      - echo "Installing Lerna..."
+      - npm install -g lerna
+      - echo "Installing dependencies..."
+      - npm config set maxsockets 15
+      - npm config set fetch-retries 5
+      - npm config set fetch-retry-mintimeout 20000
+      - npm config set fetch-retry-maxtimeout 120000
       - npm cache clean --force
   pre_build:
     commands:
-      - echo Installing production dependencies...
-      - npm install --only=prod --no-audit --no-fund --prefer-offline
+      - echo "Installing production dependencies..."
+      - lerna bootstrap --since-version-mode=fixed --ignore-scripts --no-ci --no-sort --no-symlink --only-updated --prefer-offline
   build:
     commands:
-      - echo Compiling TypeScript to JavaScript...
-      - npx tsc --outDir dist
-      - echo Pruning development dependencies...
-      - npm prune --production
-      - cp -R node_modules dist/
-      - echo Packaging the SAM application...
+      - echo "Compiling TypeScript to JavaScript..."
+      - lerna run --parallel build
+      - echo "Pruning development dependencies..."
+      - lerna clean -y
+      - echo "Packaging the SAM application..."
       - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml
 
 artifacts:
   files:
     - packaged.yaml
-    - dist/**
-
-cache:
-  paths:
-    - '/root/.npm/**/*'
-    - 'dist/**/*'
+    - packages/*/dist/**
