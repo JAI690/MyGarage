@@ -11,6 +11,7 @@ phases:
     commands:
       - echo "Installing Yarn..."
       - npm install -g yarn
+      - npm install -g typescript modclean
       - yarn cache clean
   pre_build:
     commands:
@@ -18,11 +19,14 @@ phases:
       - yarn install
   build:
     commands:
-      - echo "Compiling TypeScript to JavaScript..."
-      - npx swc src -d dist
-      - echo "Pruning development dependencies..."
-      - yarn run prune
-      - echo "Packaging the SAM application..."
+      - echo Compiling TypeScript to JavaScript...
+      - npx tsc --outDir dist
+      - echo Cleaning unnecessary files from node_modules...
+      - modclean --run
+      - echo Pruning development dependencies...
+      - npm prune --production
+      - cp -R node_modules dist/
+      - echo Packaging the SAM application...
       - sam package --s3-bucket auto-garage-deployment --output-template-file packaged.yaml
 
 artifacts:
