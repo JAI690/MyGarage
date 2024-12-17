@@ -1,7 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import * as bcrypt from 'bcryptjs';
-import { authorize } from '../common/utils/authorize';
 import { corsMiddleware } from '../common/utils/corsMiddleware';
 import { v4 as uuid } from 'uuid';
 
