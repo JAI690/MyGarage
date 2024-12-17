@@ -10,17 +10,11 @@ phases:
       nodejs: 20
     commands:
       - echo Installing dependencies...
-      - npm config set maxsockets 15
-      - npm config set fetch-retries 5
-      - npm config set fetch-retry-mintimeout 20000
-      - npm config set fetch-retry-maxtimeout 120000
       - npm cache clean --force
   pre_build:
     commands:
       - echo Installing production dependencies...
       - npm install --only=prod --no-audit --no-fund --prefer-offline
-      - echo Installing dev dependencies...
-      - npm install --only=dev --no-audit --no-fund --prefer-offline
   build:
     commands:
       - echo Compiling TypeScript to JavaScript...
