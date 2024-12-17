@@ -650,21 +650,20 @@ Resources:
             Method: DELETE
 
   FetchProductsFunction:
-  Type: AWS::Serverless::Function
-  Properties:
-    Handler: products/getAll.endpointHandler
-    Runtime: nodejs20.x
-    Policies:
-      - DynamoDBReadPolicy:
-          TableName: !Ref ProductsTable
-    Events:
-      FetchApi:
-        Type: Api
-        Properties:
-          RestApiId: !Ref AutoGarageApi
-          Path: /products
-          Method: GET
-
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: products/getAll.endpointHandler
+      Runtime: nodejs20.x
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ProductsTable
+      Events:
+        FetchApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /products
+            Method: GET
 
 
 
