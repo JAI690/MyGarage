@@ -6,7 +6,10 @@ phases:
       nodejs: 20
     commands:
       - echo Installing dependencies...
-      - npm ci
+      - ulimit -n 65536  # Increase the file descriptor limit
+      - npm install -g npm@latest  # Update npm to the latest version
+      - npm cache clean --force  # Clear npm cache
+      - npm ci --no-audit --no-fund  # Install dependencies with reduced output
       - npm install -g typescript modclean
   build:
     commands:
