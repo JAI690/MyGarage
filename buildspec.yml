@@ -9,15 +9,8 @@ phases:
     runtime-versions:
       nodejs: 20
     commands:
-      - echo "Installing Lerna..."
-      - npm install -g lerna
       - echo "Installing Yarn..."
       - npm install -g yarn
-      - echo "Installing dependencies..."
-      - yarn config set maxsockets 15
-      - yarn config set fetch-retries 5
-      - yarn config set fetch-retry-mintimeout 20000
-      - yarn config set fetch-retry-maxtimeout 120000
       - yarn cache clean
   pre_build:
     commands:
