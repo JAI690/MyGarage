@@ -524,6 +524,7 @@ Resources:
         PutApi:
           Type: Api
           Properties:
+            RestApiId: !Ref AutoGarageApi
             Path: /users/{id}
             Method: PUT
 
@@ -548,6 +549,7 @@ Resources:
         DeleteApi:
           Type: Api
           Properties:
+            RestApiId: !Ref AutoGarageApi
             Path: /users/{id}
             Method: DELETE
   
@@ -563,6 +565,7 @@ Resources:
         PostApi:
           Type: Api
           Properties:
+            RestApiId: !Ref AutoGarageApi
             Path: /products
             Method: POST
   
@@ -578,6 +581,7 @@ Resources:
         PostApi:
           Type: Api
           Properties:
+            RestApiId: !Ref AutoGarageApi
             Path: /warehouse
             Method: POST
 
@@ -593,6 +597,7 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
+            RestApiId: !Ref AutoGarageApi
             Path: /warehouse
             Method: POST
 
@@ -608,6 +613,7 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
+            RestApiId: !Ref AutoGarageApi
             Path: /warehouse
             Method: GET
 
@@ -623,6 +629,7 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
+            RestApiId: !Ref AutoGarageApi
             Path: /warehouse/{id}
             Method: PUT
 
@@ -638,6 +645,7 @@ Resources:
         ApiEvent:
           Type: Api
           Properties:
+            RestApiId: !Ref AutoGarageApi
             Path: /warehouse/{id}
             Method: DELETE
 
