@@ -554,7 +554,7 @@ Resources:
   CreateProductFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: warehouse/create.handler
+      Handler: warehouse/create.endpointHandler
       Runtime: nodejs20.x
       Policies:
         - DynamoDBCrudPolicy:
@@ -569,7 +569,7 @@ Resources:
   GetProductsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: warehouse/getAll.handler
+      Handler: warehouse/getAll.endpointHandler
       Runtime: nodejs20.x
       Policies:
         - DynamoDBReadPolicy:
@@ -584,7 +584,7 @@ Resources:
   UpdateProductFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: warehouse/update.handler
+      Handler: warehouse/update.endpointHandler
       Runtime: nodejs20.x
       Policies:
         - DynamoDBCrudPolicy:
@@ -599,7 +599,7 @@ Resources:
   DeleteProductFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: warehouse/delete.handler
+      Handler: warehouse/delete.endpointHandler
       Runtime: nodejs20.x
       Policies:
         - DynamoDBCrudPolicy:
