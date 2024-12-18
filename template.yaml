@@ -559,25 +559,6 @@ Resources:
             Path: /users/{id}
             Method: DELETE
   
-  CreateProductFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: products/create.endpointHandler
-      Runtime: nodejs20.x
-      CodeUri: ./dist/
-      MemorySize: 128
-      Timeout: 5
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref ProductsTable
-      Events:
-        PostApi:
-          Type: Api
-          Properties:
-            RestApiId: !Ref AutoGarageApi
-            Path: /products
-            Method: POST
-  
   AssignProductLocationFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -594,29 +575,10 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref AutoGarageApi
-            Path: /warehouse/location
-            Method: POST
-
-  CreateProductWarehouseFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: warehouse/create.endpointHandler
-      Runtime: nodejs20.x
-      CodeUri: ./dist/
-      MemorySize: 128
-      Timeout: 5
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref WarehouseTable
-      Events:
-        ApiEvent:
-          Type: Api
-          Properties:
-            RestApiId: !Ref AutoGarageApi
             Path: /warehouse
             Method: POST
 
-  GetProductsFunction:
+  GetWarehouseFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: warehouse/getAll.endpointHandler
@@ -627,6 +589,8 @@ Resources:
       Policies:
         - DynamoDBReadPolicy:
             TableName: !Ref WarehouseTable
+        - DynamoDBReadPolicy:
+            TableName: !Ref ProductsTable
       Events:
         ApiEvent:
           Type: Api
@@ -635,7 +599,7 @@ Resources:
             Path: /warehouse
             Method: GET
 
-  UpdateProductFunction:
+  UpdateWarehouseFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: warehouse/update.endpointHandler
@@ -654,7 +618,7 @@ Resources:
             Path: /warehouse/{id}
             Method: PUT
 
-  DeleteProductFunction:
+  DeleteWarehouseFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: warehouse/delete.endpointHandler
@@ -672,6 +636,25 @@ Resources:
             RestApiId: !Ref AutoGarageApi
             Path: /warehouse/{id}
             Method: DELETE
+  
+  CreateProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: products/create.endpointHandler
+      Runtime: nodejs20.x
+      CodeUri: ./dist/
+      MemorySize: 128
+      Timeout: 5
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ProductsTable
+      Events:
+        PostApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref AutoGarageApi
+            Path: /products
+            Method: POST
 
   FetchProductsFunction:
     Type: AWS::Serverless::Function
