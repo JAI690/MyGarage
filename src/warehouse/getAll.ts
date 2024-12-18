@@ -34,7 +34,7 @@ export const handler = authorize(['Cliente', 'Admin'])(async (
       const product = products.find((p) => p.ProductID === record.ProductID);
       return {
         ...record,
-        productName: product?.name || 'Producto desconocido',
+        name: product?.name || 'Producto desconocido',
       };
     });
 
