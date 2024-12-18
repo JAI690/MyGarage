@@ -572,7 +572,7 @@ Resources:
   AssignProductLocationFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/warehouse/assignLocation.endpointHandler
+      Handler: warehouse/assignLocation.endpointHandler
       Runtime: nodejs20.x
       Policies:
         - DynamoDBCrudPolicy:
