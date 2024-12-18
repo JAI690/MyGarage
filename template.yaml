@@ -840,3 +840,4 @@ Resources:
         - AttributeName: WarehouseID
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
+
