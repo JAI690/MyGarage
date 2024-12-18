@@ -582,7 +582,7 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref AutoGarageApi
-            Path: /warehouse
+            Path: /warehouse/location
             Method: POST
 
   CreateProductWarehouseFunction:
