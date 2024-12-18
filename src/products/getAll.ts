@@ -7,8 +7,9 @@ import type { CustomContext } from '../common/types/CustomContext';
 const dynamoDb = new DynamoDB.DocumentClient();
 
 export const handler = authorize(['Admin', 'Cliente'])(async (
-  event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> => {
+    event: APIGatewayProxyEvent,
+    context: CustomContext
+  ): Promise<APIGatewayProxyResult> => {
   try {
     const params = {
       TableName: 'Products',

@@ -193,7 +193,9 @@ Resources:
     Properties:
       Handler: vehicles/update.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist/
+      CodeUri: ./dist
+      MemorySize: 128
+      Timeout: 5
       Policies:
         - AWSLambdaBasicExecutionRole
         - Version: '2012-10-17'
@@ -215,7 +217,9 @@ Resources:
     Properties:
       Handler: vehicles/delete.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist/
+      CodeUri: ./dist
+      MemorySize: 128
+      Timeout: 5
       Policies:
         - DynamoDBCrudPolicy:
             TableName: VehiclesTable
@@ -383,7 +387,9 @@ Resources:
     Properties:
       Handler: services/delete.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist/
+      CodeUri: ./dist
+      MemorySize: 128
+      Timeout: 5
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref ServicesTable
@@ -558,6 +564,9 @@ Resources:
     Properties:
       Handler: products/create.endpointHandler
       Runtime: nodejs20.x
+      CodeUri: ./dist
+      MemorySize: 128
+      Timeout: 5
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref ProductsTable
@@ -574,6 +583,9 @@ Resources:
     Properties:
       Handler: warehouse/assignLocation.endpointHandler
       Runtime: nodejs20.x
+      CodeUri: ./dist
+      MemorySize: 128
+      Timeout: 5
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref WarehouseTable
@@ -590,6 +602,9 @@ Resources:
     Properties:
       Handler: warehouse/create.endpointHandler
       Runtime: nodejs20.x
+      CodeUri: ./dist
+      MemorySize: 128
+      Timeout: 5
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref WarehouseTable
@@ -606,6 +621,9 @@ Resources:
     Properties:
       Handler: warehouse/getAll.endpointHandler
       Runtime: nodejs20.x
+      CodeUri: ./dist
+      MemorySize: 128
+      Timeout: 5
       Policies:
         - DynamoDBReadPolicy:
             TableName: !Ref WarehouseTable
@@ -622,6 +640,9 @@ Resources:
     Properties:
       Handler: warehouse/update.endpointHandler
       Runtime: nodejs20.x
+      CodeUri: ./dist
+      MemorySize: 128
+      Timeout: 5
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref WarehouseTable
@@ -638,6 +659,9 @@ Resources:
     Properties:
       Handler: warehouse/delete.endpointHandler
       Runtime: nodejs20.x
+      CodeUri: ./dist
+      MemorySize: 128
+      Timeout: 5
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref WarehouseTable
@@ -654,6 +678,9 @@ Resources:
     Properties:
       Handler: products/getAll.endpointHandler
       Runtime: nodejs20.x
+      CodeUri: ./dist
+      MemorySize: 128
+      Timeout: 5
       Policies:
         - DynamoDBReadPolicy:
             TableName: !Ref ProductsTable
