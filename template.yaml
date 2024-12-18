@@ -193,7 +193,7 @@ Resources:
     Properties:
       Handler: vehicles/update.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       MemorySize: 128
       Timeout: 5
       Policies:
@@ -217,7 +217,7 @@ Resources:
     Properties:
       Handler: vehicles/delete.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       MemorySize: 128
       Timeout: 5
       Policies:
@@ -387,7 +387,7 @@ Resources:
     Properties:
       Handler: services/delete.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       MemorySize: 128
       Timeout: 5
       Policies:
@@ -434,7 +434,7 @@ Resources:
     Properties:
       Handler: users/getMechanics.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       Description: Get all mechanics
       MemorySize: 128
       Timeout: 5
@@ -461,7 +461,7 @@ Resources:
     Properties:
       Handler: orders/getByMechanic.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       Description: Get orders assigned to a mechanic
       MemorySize: 128
       Timeout: 5
@@ -491,7 +491,7 @@ Resources:
     Properties:
       Handler: users/get.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       Policies:
       - AWSLambdaBasicExecutionRole
       - Version: '2012-10-17'
@@ -514,7 +514,7 @@ Resources:
     Properties:
       Handler: users/update.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       Description: Update a user
       MemorySize: 128
       Timeout: 5
@@ -539,7 +539,7 @@ Resources:
     Properties:
       Handler: users/delete.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       Description: Delete a user
       MemorySize: 128
       Timeout: 5
@@ -564,7 +564,7 @@ Resources:
     Properties:
       Handler: products/create.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       MemorySize: 128
       Timeout: 5
       Policies:
@@ -583,7 +583,7 @@ Resources:
     Properties:
       Handler: warehouse/assignLocation.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       MemorySize: 128
       Timeout: 5
       Policies:
@@ -602,7 +602,7 @@ Resources:
     Properties:
       Handler: warehouse/create.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       MemorySize: 128
       Timeout: 5
       Policies:
@@ -621,7 +621,7 @@ Resources:
     Properties:
       Handler: warehouse/getAll.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       MemorySize: 128
       Timeout: 5
       Policies:
@@ -640,7 +640,7 @@ Resources:
     Properties:
       Handler: warehouse/update.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       MemorySize: 128
       Timeout: 5
       Policies:
@@ -659,7 +659,7 @@ Resources:
     Properties:
       Handler: warehouse/delete.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       MemorySize: 128
       Timeout: 5
       Policies:
@@ -678,7 +678,7 @@ Resources:
     Properties:
       Handler: products/getAll.endpointHandler
       Runtime: nodejs20.x
-      CodeUri: ./dist
+      CodeUri: ./dist/
       MemorySize: 128
       Timeout: 5
       Policies:
