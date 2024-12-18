@@ -556,7 +556,7 @@ Resources:
   CreateProductFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/products/create.endpointHandler
+      Handler: products/create.endpointHandler
       Runtime: nodejs20.x
       Policies:
         - DynamoDBCrudPolicy:
@@ -658,7 +658,7 @@ Resources:
         - DynamoDBReadPolicy:
             TableName: !Ref ProductsTable
       Events:
-        FetchApi:
+        GetApi:
           Type: Api
           Properties:
             RestApiId: !Ref AutoGarageApi
