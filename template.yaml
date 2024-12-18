@@ -690,20 +690,20 @@ Resources:
             Path: /products/{id}
             Method: PUT
 
-DeleteProductFunction:
-  Type: AWS::Serverless::Function
-  Properties:
-    Handler: products/delete.endpointHandler
-    Runtime: nodejs20.x
-    Policies:
-      - DynamoDBCrudPolicy:
-          TableName: ProductsTable
-    Events:
-      DeleteApi:
-        Type: Api
-        Properties:
-          Path: /products/{id}
-          Method: DELETE
+  DeleteProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: products/delete.endpointHandler
+      Runtime: nodejs20.x
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: ProductsTable
+      Events:
+        DeleteApi:
+          Type: Api
+          Properties:
+            Path: /products/{id}
+            Method: DELETE
 
 
 
